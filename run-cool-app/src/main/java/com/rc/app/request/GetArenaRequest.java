@@ -1,5 +1,6 @@
 package com.rc.app.request;
 
+import com.rc.app.constants.Constants;
 import com.rc.app.constants.LoggerNameConstants;
 import org.json.JSONObject;
 
@@ -18,7 +19,8 @@ public class GetArenaRequest extends BaseRequest {
         JSONObject requestContent = getRequestJsonObject(requestJsonObject);
         if (requestContent == null)
             return;
-        this.isGetBattleInfo = "1".equals(getJsonString(requestContent, JSON_NAME_IS_GET_BATTLE_INFO));
+        this.isGetBattleInfo = Constants.RESPONSE_BOOLEAN_VALUE_YES.
+                equals(getJsonString(requestContent, JSON_NAME_IS_GET_BATTLE_INFO));
     }
 
     @Override

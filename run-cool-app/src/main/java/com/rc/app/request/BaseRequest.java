@@ -46,7 +46,7 @@ public abstract class BaseRequest {
     protected Pet pet;
     protected String imei;
 
-    public void parse(HttpServletRequest request) {
+    public void parse(HttpServletRequest request) throws Exception {
         LogContext logContext = LogContext.instance();
         logContext.clear();
         logContext.setRequestUUID(getRequestUUID());
@@ -72,6 +72,7 @@ public abstract class BaseRequest {
             logContext.info(JsonUtil.formatJsonStr(requestJsonObject.toString()));
         } catch (Exception e) {
             logContext.error(e, "转化请求报文失败");
+            throw e;
         }
     }
 

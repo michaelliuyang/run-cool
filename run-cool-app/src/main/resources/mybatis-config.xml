@@ -6,5 +6,5 @@
 <configuration>
 	<settings>
 		<setting name="lazyLoadingEnabled" value="false" />
-	</settings>	
+	</settings>
 </configuration>

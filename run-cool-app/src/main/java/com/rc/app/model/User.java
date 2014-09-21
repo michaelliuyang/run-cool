@@ -26,6 +26,7 @@ public class User extends BaseModel {
     private Integer winCount = 0;
     private Integer loseCount = 0;
     private Integer joinArenaCount = 0;
+    private Boolean isContinueWin = false;
 
     public void generateUserId(String imei) throws Exception {
         setUserId(getUserIdByHash(imei));
@@ -161,5 +162,13 @@ public class User extends BaseModel {
 
     public void setJoinArenaCount(Integer joinArenaCount) {
         this.joinArenaCount = joinArenaCount;
+    }
+
+    public Boolean getIsContinueWin() {
+        return isContinueWin;
+    }
+
+    public void setIsContinueWin(Boolean isContinueWin) {
+        this.isContinueWin = isContinueWin;
     }
 }

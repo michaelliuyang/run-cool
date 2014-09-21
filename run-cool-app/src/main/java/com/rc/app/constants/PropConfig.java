@@ -6,7 +6,7 @@ package com.rc.app.constants;
  */
 public enum PropConfig {
 
-    SPRINT("S", 2), REVIVE("R", 3);
+    SPRINT("S", 3), REVIVE("R", 3);
 
     private String name;
     private int limit;

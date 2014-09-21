@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 /**
  * 获取对战玩家信息请求
- * Created by liuyang on 14-9-20.
+ * Created by michael on 14-9-20.
  */
 public class GetBattleTargetRequest extends BaseRequest {
 
@@ -18,7 +18,7 @@ public class GetBattleTargetRequest extends BaseRequest {
         JSONObject requestContent = getRequestJsonObject(requestJsonObject);
         if (requestContent == null)
             return;
-        this.arenaId = getJsonLong(requestJsonObject, JSON_NAME_ARENA_ID);
+        this.arenaId = getJsonLong(requestContent, JSON_NAME_ARENA_ID);
     }
 
     @Override

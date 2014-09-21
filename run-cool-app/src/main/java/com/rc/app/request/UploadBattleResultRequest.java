@@ -1,6 +1,7 @@
 package com.rc.app.request;
 
 import com.rc.app.constants.BattleResult;
+import com.rc.app.constants.Constants;
 import com.rc.app.constants.LoggerNameConstants;
 import org.json.JSONObject;
 
@@ -26,10 +27,11 @@ public class UploadBattleResultRequest extends BaseRequest {
         JSONObject requestContent = getRequestJsonObject(requestJsonObject);
         if (requestContent == null)
             return;
-        this.arenaId = getJsonLong(requestJsonObject, JSON_NAME_ARENA_ID);
-        this.score = getJsonInt(requestJsonObject, JSON_NAME_SCORE);
-        this.result = BattleResult.getTypeByDisplayName(getJsonString(requestJsonObject, JSON_NAME_RESULT));
-        this.isContinueWin = "1".equals(getJsonString(requestJsonObject, JSON_NAME_IS_CONTINUE_WIN));
+        this.arenaId = getJsonLong(requestContent, JSON_NAME_ARENA_ID);
+        this.score = getJsonInt(requestContent, JSON_NAME_SCORE);
+        this.result = BattleResult.getTypeByDisplayName(getJsonString(requestContent, JSON_NAME_RESULT));
+        this.isContinueWin = Constants.RESPONSE_BOOLEAN_VALUE_YES.
+                equals(getJsonString(requestContent, JSON_NAME_IS_CONTINUE_WIN));
     }
 
     public long getArenaId() {

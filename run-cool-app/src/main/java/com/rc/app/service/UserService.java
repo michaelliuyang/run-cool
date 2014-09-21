@@ -7,9 +7,15 @@ import com.rc.app.model.Role;
 import com.rc.app.model.User;
 import com.rc.app.request.BaseRequest;
 import com.rc.app.tools.LogContext;
+import com.rc.app.tools.NumberUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户业务类
@@ -46,6 +52,33 @@ public class UserService {
             resultUser = findOrSaveUser(request, request.getUserId());
         }
         return resultUser;
+    }
+
+    public User getTargetUser(boolean isContinueWin, int maxBattleScore, String userId) {
+        double leftPercent = isContinueWin ? 0.1d : 0.15d;
+        double rightPercent = isContinueWin ? 0.1d : 0.05d;
+        double left = (1 - leftPercent) * maxBattleScore;
+        double right = (1 + rightPercent) * maxBattleScore;
+        List<User> userList = findByScoreAndUserId(NumberUtil.formatNumber(left),
+                NumberUtil.formatNumber(right), userId);
+        if (userList.isEmpty())
+            return null;
+        long random = NumberUtil.getRandomNum(0, userList.size() - 1);
+        return userList.get((int) random);
+    }
+
+    private List<User> findByScoreAndUserId(int lowScore, int highScore, String userId) {
+        List<User> userList = new ArrayList<User>();
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("lowScore", lowScore);
+            params.put("highScore", highScore);
+            params.put("userId", userId);
+            userList = userMapper.findByScoreAndUserId(params);
+        } catch (Exception e) {
+            LogContext.instance().error(e, "Find user list by score error");
+        }
+        return userList;
     }
 
     private User findOrSaveUser(BaseRequest request, String userId) throws Exception {

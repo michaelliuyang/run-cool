@@ -1,6 +1,7 @@
 package com.rc.app.constants;
 
 /**
+ * 常量
  * Created by michael on 14-9-21.
  */
 public class Constants {
