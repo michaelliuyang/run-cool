@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rc.app.mapper.ArenaMapper">
+
+    <resultMap id="arenaResult" type="com.rc.app.model.Arena">
+        <result property="id" column="ID"/>
+        <result property="type" column="ARENA_TYPE"/>
+        <result property="level" column="ARENA_LEVEL"/>
+        <result property="consumeMoney" column="CONSUME_MONEY"/>
+        <result property="rewardMoney" column="REWARD_MONEY"/>
+        <result property="rewardScore" column="REWARD_SCORE"/>
+        <result property="limitCount" column="LIMIT_COUNT"/>
+    </resultMap>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="arenaResult">
+      SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
+             REWARD_SCORE,LIMIT_COUNT
+      FROM TBL_ARENA WHERE ID = #{ID}
+    </select>
+
+    <select id="findAll" resultMap="arenaResult">
+        SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
+        REWARD_SCORE,LIMIT_COUNT
+        FROM TBL_ARENA
+    </select>
+
+</mapper>

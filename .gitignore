@@ -9,3 +9,8 @@ gradle/
 *.iml
 build.gradle
 gradlew*
+.DS_Store
+*/target
+*.class
+*.jar
+*.war

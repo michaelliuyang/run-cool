@@ -1,0 +1,1 @@
+{"response":{"allow":"0","joinedCount":3,"props":[{"name":"S","limit":2},{"name":"R","limit":3}],"arenas":[{"type":"GOLDEN","level":"ONE","consumeMoney":10,"rewardMoney":50,"rewardScore":100,"limitCount":3,"id":1,"createTime":"Sep 21, 2014 3:35:38 PM"}],"protocol":"1.0","type":"1","userId":"bc928dfd2aa911f65580b6a3e2f5192e","returnCode":"0","battleResult":"0W,0LOSE"}}

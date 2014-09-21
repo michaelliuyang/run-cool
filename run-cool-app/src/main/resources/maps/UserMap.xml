@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rc.app.mapper.UserMapper">
+
+    <resultMap id="userResult" type="com.rc.app.model.User">
+        <result property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="mobilePhone" column="MOBILE_PHONE"/>
+        <result property="nickName" column="NICK_NAME"/>
+        <result property="roleName" column="ROLE_NAME"/>
+        <result property="roleRank" column="ROLE_RANK"/>
+        <result property="petName" column="PET_NAME"/>
+        <result property="mountsName" column="MOUNTS_NAME"/>
+        <result property="mountsRank" column="MOUNTS_RANK"/>
+        <result property="score" column="SCORE"/>
+        <result property="maxBattleScore" column="MAX_BATTLE_SCORE"/>
+        <result property="winCount" column="WIN_COUNT"/>
+        <result property="loseCount" column="LOSE_COUNT"/>
+        <result property="joinArenaCount" column="JOIN_ARENA_COUNT"/>
+    </resultMap>
+
+    <select id="findByUserId" parameterType="java.lang.String" resultMap="userResult">
+      SELECT ID,USER_ID,MOBILE_PHONE,NICK_NAME,ROLE_NAME,
+             ROLE_RANK,PET_NAME,MOUNTS_NAME,MOUNTS_RANK,SCORE,
+             MAX_BATTLE_SCORE,WIN_COUNT,LOSE_COUNT,JOIN_ARENA_COUNT
+      FROM TBL_USER WHERE USER_ID = #{userId}
+    </select>
+
+    <update id="updateUserBasicInfo" parameterType="com.rc.app.model.User">
+        UPDATE TBL_USER
+        SET MOBILE_PHONE = #{mobilePhone},NICK_NAME = #{nickName},PET_NAME = #{petName},
+            ROLE_NAME = #{roleName},ROLE_RANK = #{roleRank},
+            MOUNTS_NAME = #{mountsName},MOUNTS_RANK = #{mountsRank}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <insert id="insertUser" parameterType="com.rc.app.model.User">
+  		INSERT INTO TBL_USER (
+  		    USER_ID,
+			MOBILE_PHONE,
+			NICK_NAME,
+			ROLE_NAME,
+			ROLE_RANK,
+			PET_NAME,
+			MOUNTS_NAME,
+			MOUNTS_RANK,
+			SCORE,
+			MAX_BATTLE_SCORE,
+			WIN_COUNT,
+			LOSE_COUNT,
+			JOIN_ARENA_COUNT,
+			CREATE_TIME
+  			)
+  		VALUES
+  			(
+  			#{userId},
+  			#{mobilePhone},
+  			#{nickName},
+  			#{roleName},
+  			#{roleRank},
+  			#{petName},
+  			#{mountsName},
+  			#{mountsRank},
+  			#{score},
+  			#{maxBattleScore},
+  			#{winCount},
+  			#{loseCount},
+  			#{joinArenaCount},
+  			#{createTime}
+  			)
+	</insert>
+
+</mapper>
