@@ -4,12 +4,43 @@
 
     <resultMap id="battleHistoryResult" type="com.rc.app.model.BattleHistory">
         <result property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="targetUserId" column="TARGET_USER_ID"/>
+        <result property="result" column="RESULT"/>
+        <result property="score" column="SCORE"/>
+        <result property="arenaId" column="ARENA_ID"/>
     </resultMap>
 
-    <select id="getCountByUserId" parameterType="java.lang.String"
-            resultType="java.lang.Integer">
-      SELECT COUNT(ID) FROM TBL_BATTLE_HISTORY
-      WHERE USER_ID = #{userId}
+    <select id="findRecentByUserId" parameterType="java.lang.String" resultMap="battleHistoryResult">
+        <![CDATA[
+          SELECT ID,USER_ID,TARGET_USER_ID,RESULT,SCORE,ARENA_ID
+          FROM TBL_BATTLE_HISTORY
+          WHERE USER_ID = #{userId} ORDER BY CREATE_TIME DESC LIMIT 5
+        ]]>
     </select>
+
+    <insert id="insertBattleHistory" parameterType="com.rc.app.model.BattleHistory">
+        <![CDATA[
+            INSERT INTO TBL_BATTLE_HISTORY (
+                USER_ID,
+                TARGET_USER_ID,
+                RESULT,
+                SCORE,
+                ARENA_ID,
+                CREATE_DATE,
+                CREATE_TIME
+                )
+            VALUES
+                (
+                #{userId},
+                #{targetUserId},
+                #{result},
+                #{score},
+                #{arenaId},
+                #{createDate},
+                #{createTime}
+                )
+  		]]>
+    </insert>
 
 </mapper>

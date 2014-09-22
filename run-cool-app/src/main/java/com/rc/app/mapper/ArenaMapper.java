@@ -1,5 +1,6 @@
 package com.rc.app.mapper;
 
+import com.rc.app.constants.ArenaLevel;
 import com.rc.app.model.Arena;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface ArenaMapper {
 
     Arena findById(long id);
 
-    List<Arena> findAll();
+    List<Arena> findByLevel(ArenaLevel level);
 
 }

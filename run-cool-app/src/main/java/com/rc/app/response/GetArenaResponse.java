@@ -1,8 +1,9 @@
 package com.rc.app.response;
 
 import com.rc.app.constants.RequestType;
-import com.rc.app.model.Arena;
-import com.rc.app.model.Prop;
+import com.rc.app.vo.ArenaVO;
+import com.rc.app.vo.BattleHistoryVO;
+import com.rc.app.vo.PropVO;
 
 import java.util.List;
 
@@ -14,8 +15,9 @@ public class GetArenaResponse extends BaseResponse {
 
     private String allow;
     private int joinedCount;
-    private List<Prop> props;
-    private List<Arena> arenas;
+    private List<PropVO> props;
+    private List<ArenaVO> arenas;
+    private List<BattleHistoryVO> battleHistorys;
 
     public GetArenaResponse(String protocol, String userId) {
         super(protocol, userId);
@@ -42,19 +44,27 @@ public class GetArenaResponse extends BaseResponse {
         this.joinedCount = joinedCount;
     }
 
-    public List<Prop> getProps() {
+    public List<PropVO> getProps() {
         return props;
     }
 
-    public void setProps(List<Prop> props) {
+    public void setProps(List<PropVO> props) {
         this.props = props;
     }
 
-    public List<Arena> getArenas() {
+    public List<ArenaVO> getArenas() {
         return arenas;
     }
 
-    public void setArenas(List<Arena> arenas) {
+    public void setArenas(List<ArenaVO> arenas) {
         this.arenas = arenas;
+    }
+
+    public List<BattleHistoryVO> getBattleHistorys() {
+        return battleHistorys;
+    }
+
+    public void setBattleHistorys(List<BattleHistoryVO> battleHistorys) {
+        this.battleHistorys = battleHistorys;
     }
 }

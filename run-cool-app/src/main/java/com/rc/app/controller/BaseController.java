@@ -5,6 +5,7 @@ import com.rc.app.model.User;
 import com.rc.app.request.BaseRequest;
 import com.rc.app.response.BaseResponse;
 import com.rc.app.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -22,8 +23,9 @@ public abstract class BaseController {
 
     protected User dealCommonBiz(BaseRequest request, BaseResponse response) throws Exception {
         User user = userService.checkUser(request);
+        if (StringUtils.isBlank(request.getUserId()))
+            request.setUserId(user.getUserId());
         response.setUserId(user.getUserId());
-        response.setBattleResult(user.formatUserBattleInfo());
         return user;
     }
 

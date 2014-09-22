@@ -1,7 +1,7 @@
 package com.rc.app.response;
 
 import com.rc.app.constants.RequestType;
-import com.rc.app.model.Ranking;
+import com.rc.app.vo.RankingVO;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class GetRankingListResponse extends BaseResponse {
 
-    private List<Ranking> scoreRankingList;
-    private List<Ranking> battleRankingList;
+    private List<RankingVO> scoreRankingVOList;
+    private List<RankingVO> battleRankingVOList;
 
     public GetRankingListResponse(String protocol, String userId) {
         super(protocol, userId);
@@ -23,19 +23,19 @@ public class GetRankingListResponse extends BaseResponse {
         return null;
     }
 
-    public List<Ranking> getScoreRankingList() {
-        return scoreRankingList;
+    public List<RankingVO> getScoreRankingVOList() {
+        return scoreRankingVOList;
     }
 
-    public void setScoreRankingList(List<Ranking> scoreRankingList) {
-        this.scoreRankingList = scoreRankingList;
+    public void setScoreRankingVOList(List<RankingVO> scoreRankingVOList) {
+        this.scoreRankingVOList = scoreRankingVOList;
     }
 
-    public List<Ranking> getBattleRankingList() {
-        return battleRankingList;
+    public List<RankingVO> getBattleRankingVOList() {
+        return battleRankingVOList;
     }
 
-    public void setBattleRankingList(List<Ranking> battleRankingList) {
-        this.battleRankingList = battleRankingList;
+    public void setBattleRankingVOList(List<RankingVO> battleRankingVOList) {
+        this.battleRankingVOList = battleRankingVOList;
     }
 }

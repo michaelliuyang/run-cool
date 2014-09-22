@@ -1,17 +1,17 @@
-package com.rc.app.model;
+package com.rc.app.vo;
 
 /**
  * 宠物
- * Created by liuyang on 14-9-18.
+ * Created by michael on 14-9-18.
  */
-public class Pet {
+public class PetVO {
 
     private String name;
 
-    public Pet() {
+    public PetVO() {
     }
 
-    public Pet(String name) {
+    public PetVO(String name) {
         this.name = name;
     }
 

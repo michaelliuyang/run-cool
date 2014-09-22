@@ -13,7 +13,4 @@ public class NumberUtil {
         return bg.setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
     }
 
-    public static void main(String[] args) {
-        System.out.println(formatNumber(98.1d));
-    }
 }

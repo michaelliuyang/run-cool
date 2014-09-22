@@ -1,20 +1,45 @@
-package com.rc.app.model;
+package com.rc.app.vo;
 
 import com.rc.app.constants.ArenaLevel;
 import com.rc.app.constants.ArenaType;
+import com.rc.app.model.Arena;
 
 /**
- * 竞技场
+ * 竞技场VO
  * Created by michael on 14-9-18.
  */
-public class Arena extends BaseModel {
+public class ArenaVO extends BaseVO<Arena> {
 
-    private ArenaType type = ArenaType.GOLDEN;
-    private ArenaLevel level = ArenaLevel.ONE;
-    private Integer consumeMoney = 0;
-    private Integer rewardMoney = 0;
-    private Integer rewardScore = 0;
+    private Long arenaId;
+    private ArenaType type;
+    private ArenaLevel level;
+    private Integer consumeMoney;
+    private Integer rewardMoney;
+    private Integer rewardScore;
     private Double continueWinAddPercent;
+
+    public ArenaVO(Arena model) {
+        super(model);
+    }
+
+    @Override
+    protected void parseFrom(Arena model) {
+        setArenaId(model.getId());
+        setType(model.getType());
+        setLevel(model.getLevel());
+        setConsumeMoney(model.getConsumeMoney());
+        setRewardMoney(model.getRewardMoney());
+        setRewardScore(model.getRewardScore());
+        setContinueWinAddPercent(model.getContinueWinAddPercent());
+    }
+
+    public Long getArenaId() {
+        return arenaId;
+    }
+
+    public void setArenaId(Long arenaId) {
+        this.arenaId = arenaId;
+    }
 
     public ArenaType getType() {
         return type;

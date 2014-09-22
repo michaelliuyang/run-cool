@@ -1,13 +1,14 @@
 package com.rc.app.service;
 
 import com.rc.app.mapper.UserMapper;
-import com.rc.app.model.Mounts;
-import com.rc.app.model.Pet;
-import com.rc.app.model.Role;
 import com.rc.app.model.User;
 import com.rc.app.request.BaseRequest;
+import com.rc.app.request.UploadBattleResultRequest;
 import com.rc.app.tools.LogContext;
 import com.rc.app.tools.NumberUtil;
+import com.rc.app.vo.MountsVO;
+import com.rc.app.vo.PetVO;
+import com.rc.app.vo.RoleVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,10 +62,28 @@ public class UserService {
         double right = (1 + rightPercent) * maxBattleScore;
         List<User> userList = findByScoreAndUserId(NumberUtil.formatNumber(left),
                 NumberUtil.formatNumber(right), userId);
-        if (userList.isEmpty())
-            return null;
+        if (userList.isEmpty()) {
+            LogContext.instance().info("Get a random user from db");
+            return userMapper.findRandom(userId);
+        }
         long random = NumberUtil.getRandomNum(0, userList.size() - 1);
         return userList.get((int) random);
+    }
+
+    public void updateUserScoreInfo(User user, int rewardScore,
+                                    UploadBattleResultRequest request) throws Exception {
+        try {
+            user.updateScore(rewardScore);
+            user.updateJoinArenaCount();
+            user.setIsContinueWin(request.isContinueWin());
+            if (user.getMaxBattleScore() < request.getBattleScore()) {
+                user.setMaxBattleScore(request.getBattleScore());
+            }
+            userMapper.updateUserScoreInfo(user);
+        } catch (Exception e) {
+            LogContext.instance().error(e, "Update user score info error");
+            throw e;
+        }
     }
 
     private List<User> findByScoreAndUserId(int lowScore, int highScore, String userId) {
@@ -111,9 +130,9 @@ public class UserService {
     }
 
     private User insertUser(BaseRequest request) throws Exception {
-        Role role = request.getRole();
-        Pet pet = request.getPet();
-        Mounts mounts = request.getMounts();
+        RoleVO role = request.getRole();
+        PetVO pet = request.getPet();
+        MountsVO mounts = request.getMounts();
         if (role == null || pet == null || mounts == null) {
             LogContext.instance().error("role or pet or mounts is empty");
             throw new Exception("role or pet or mounts is empty,insert user error");

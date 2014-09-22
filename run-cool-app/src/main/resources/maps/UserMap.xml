@@ -14,8 +14,6 @@
         <result property="mountsRank" column="MOUNTS_RANK"/>
         <result property="score" column="SCORE"/>
         <result property="maxBattleScore" column="MAX_BATTLE_SCORE"/>
-        <result property="winCount" column="WIN_COUNT"/>
-        <result property="loseCount" column="LOSE_COUNT"/>
         <result property="joinArenaCount" column="JOIN_ARENA_COUNT"/>
         <result property="isContinueWin" column="IS_CONTINUE_WIN"/>
     </resultMap>
@@ -24,7 +22,7 @@
       <![CDATA[
           SELECT ID,USER_ID,MOBILE_PHONE,NICK_NAME,ROLE_NAME,
                  ROLE_RANK,PET_NAME,MOUNTS_NAME,MOUNTS_RANK,SCORE,
-                 MAX_BATTLE_SCORE,WIN_COUNT,LOSE_COUNT,JOIN_ARENA_COUNT,IS_CONTINUE_WIN
+                 MAX_BATTLE_SCORE,JOIN_ARENA_COUNT,IS_CONTINUE_WIN
           FROM TBL_USER WHERE USER_ID = #{userId}
         ]]>
     </select>
@@ -33,9 +31,20 @@
         <![CDATA[
           SELECT USER_ID,MOBILE_PHONE,NICK_NAME,ROLE_NAME,
           ROLE_RANK,PET_NAME,MOUNTS_NAME,MOUNTS_RANK,SCORE,
-          MAX_BATTLE_SCORE,WIN_COUNT,LOSE_COUNT
+          MAX_BATTLE_SCORE
           FROM TBL_USER WHERE MAX_BATTLE_SCORE BETWEEN #{lowScore} AND #{highScore}
           AND USER_ID <> #{userId}
+        ]]>
+    </select>
+
+    <select id="findRandom" parameterType="java.lang.String" resultMap="userResult">
+        <![CDATA[
+          SELECT * FROM TBL_USER AS t1
+          JOIN
+          (SELECT ROUND(RAND() * ((SELECT MAX(ID) FROM TBL_USER)-(SELECT MIN(ID) FROM TBL_USER))
+          +(SELECT MIN(ID) FROM TBL_USER)) AS ID) AS t2
+          WHERE t1.ID >= t2.ID AND t1.USER_ID <> #{userId}
+          ORDER BY t1.ID LIMIT 1;
         ]]>
     </select>
 
@@ -45,6 +54,15 @@
             SET MOBILE_PHONE = #{mobilePhone},NICK_NAME = #{nickName},PET_NAME = #{petName},
                 ROLE_NAME = #{roleName},ROLE_RANK = #{roleRank},
                 MOUNTS_NAME = #{mountsName},MOUNTS_RANK = #{mountsRank}
+            WHERE USER_ID = #{userId}
+        ]]>
+    </update>
+
+    <update id="updateUserScoreInfo" parameterType="com.rc.app.model.User">
+        <![CDATA[
+            UPDATE TBL_USER
+            SET SCORE = #{score},MAX_BATTLE_SCORE = #{maxBattleScore},
+                JOIN_ARENA_COUNT = #{joinArenaCount},IS_CONTINUE_WIN = #{isContinueWin}
             WHERE USER_ID = #{userId}
         ]]>
     </update>
@@ -62,8 +80,6 @@
                 MOUNTS_RANK,
                 SCORE,
                 MAX_BATTLE_SCORE,
-                WIN_COUNT,
-                LOSE_COUNT,
                 JOIN_ARENA_COUNT,
                 IS_CONTINUE_WIN,
                 CREATE_TIME
@@ -80,8 +96,6 @@
                 #{mountsRank},
                 #{score},
                 #{maxBattleScore},
-                #{winCount},
-                #{loseCount},
                 #{joinArenaCount},
                 #{isContinueWin},
                 #{createTime}

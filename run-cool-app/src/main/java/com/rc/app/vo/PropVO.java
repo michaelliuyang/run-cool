@@ -1,15 +1,15 @@
-package com.rc.app.model;
+package com.rc.app.vo;
 
 /**
  * 道具
  * Created by michael on 14-9-21.
  */
-public class Prop {
+public class PropVO {
 
     private String name;
     private int limit;
 
-    public Prop(String name, int limit) {
+    public PropVO(String name, int limit) {
         this.name = name;
         this.limit = limit;
     }

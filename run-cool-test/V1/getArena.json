@@ -8,11 +8,11 @@
         "nickName": "michael",
         "role": {
             "name": "magic",
-            "rank": "2"
+            "rank": "3"
         },
         "mounts": {
             "name": "bird",
-            "rank": "6"
+            "rank": "8"
         },
         "pet": {
             "name": "peter"

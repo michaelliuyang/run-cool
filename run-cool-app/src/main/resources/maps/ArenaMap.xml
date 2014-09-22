@@ -9,19 +9,23 @@
         <result property="consumeMoney" column="CONSUME_MONEY"/>
         <result property="rewardMoney" column="REWARD_MONEY"/>
         <result property="rewardScore" column="REWARD_SCORE"/>
-        <result property="limitCount" column="LIMIT_COUNT"/>
+        <result property="continueWinAddPercent" column="CONTINUE_WIN_ADD_PERCENT"/>
     </resultMap>
 
     <select id="findById" parameterType="java.lang.Long" resultMap="arenaResult">
-      SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
-             REWARD_SCORE,LIMIT_COUNT
-      FROM TBL_ARENA WHERE ID = #{ID}
+      <![CDATA[
+          SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
+                 REWARD_SCORE,CONTINUE_WIN_ADD_PERCENT
+          FROM TBL_ARENA WHERE ID = #{ID}
+      ]]>
     </select>
 
-    <select id="findAll" resultMap="arenaResult">
-        SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
-        REWARD_SCORE,LIMIT_COUNT
-        FROM TBL_ARENA
+    <select id="findByLevel" parameterType="java.lang.String" resultMap="arenaResult">
+        <![CDATA[
+            SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
+            REWARD_SCORE,CONTINUE_WIN_ADD_PERCENT
+            FROM TBL_ARENA WHERE ARENA_LEVEL = #{level}
+        ]]>
     </select>
 
 </mapper>

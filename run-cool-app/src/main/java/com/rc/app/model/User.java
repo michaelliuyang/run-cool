@@ -1,6 +1,6 @@
 package com.rc.app.model;
 
-import com.rc.app.constants.BattleResult;
+import com.rc.app.constants.ArenaLevel;
 import com.rc.app.constants.Constants;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,8 +23,6 @@ public class User extends BaseModel {
     private String mountsRank;
     private Integer score = 0;
     private Integer maxBattleScore = 0;
-    private Integer winCount = 0;
-    private Integer loseCount = 0;
     private Integer joinArenaCount = 0;
     private Boolean isContinueWin = false;
 
@@ -44,11 +42,6 @@ public class User extends BaseModel {
         }
     }
 
-    public String formatUserBattleInfo() {
-        return this.winCount + BattleResult.WIN.getDisplayName()
-                + "," + this.loseCount + BattleResult.LOSE;
-    }
-
     public boolean isAllowJoinArena() {
         return this.joinArenaCount < Constants.LIMIT_JOIN_ARENA;
     }
@@ -58,6 +51,22 @@ public class User extends BaseModel {
             this.joinArenaCount = 1;
         else
             this.joinArenaCount += 1;
+    }
+
+    public ArenaLevel getJoinArenaLevel() {
+        if (this.joinArenaCount == 0) {
+            return ArenaLevel.ONE;
+        } else if (this.joinArenaCount == 1) {
+            return ArenaLevel.TWO;
+        } else if (this.joinArenaCount == 2) {
+            return ArenaLevel.THREE;
+        } else {
+            return ArenaLevel.NOT_JOIN;
+        }
+    }
+
+    public void updateScore(int rewardScore) {
+        this.score += rewardScore;
     }
 
     public String getUserId() {
@@ -138,22 +147,6 @@ public class User extends BaseModel {
 
     public void setMaxBattleScore(Integer maxBattleScore) {
         this.maxBattleScore = maxBattleScore;
-    }
-
-    public Integer getWinCount() {
-        return winCount;
-    }
-
-    public void setWinCount(Integer winCount) {
-        this.winCount = winCount;
-    }
-
-    public Integer getLoseCount() {
-        return loseCount;
-    }
-
-    public void setLoseCount(Integer loseCount) {
-        this.loseCount = loseCount;
     }
 
     public Integer getJoinArenaCount() {

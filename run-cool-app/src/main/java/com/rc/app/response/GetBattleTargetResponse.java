@@ -1,7 +1,7 @@
 package com.rc.app.response;
 
 import com.rc.app.constants.RequestType;
-import com.rc.app.model.User;
+import com.rc.app.vo.UserVO;
 
 /**
  * 获取对战玩家信息回复
@@ -9,7 +9,7 @@ import com.rc.app.model.User;
  */
 public class GetBattleTargetResponse extends BaseResponse {
 
-    private User battleTargetUser;
+    private UserVO battleTargetUser;
 
     public GetBattleTargetResponse(String protocol, String userId) {
         super(protocol, userId);
@@ -20,11 +20,11 @@ public class GetBattleTargetResponse extends BaseResponse {
         return RequestType.GET_BATTLE_TARGET;
     }
 
-    public User getBattleTargetUser() {
+    public UserVO getBattleTargetUser() {
         return battleTargetUser;
     }
 
-    public void setBattleTargetUser(User battleTargetUser) {
+    public void setBattleTargetUser(UserVO battleTargetUser) {
         this.battleTargetUser = battleTargetUser;
     }
 }

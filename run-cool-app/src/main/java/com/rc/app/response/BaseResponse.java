@@ -19,7 +19,6 @@ public abstract class BaseResponse {
     protected String type;
     protected String userId;
     protected String returnCode = ResponseReturnCode.SUCCESS.getIndex();
-    protected String battleResult;
 
     public BaseResponse(String protocol, String userId) {
         this.protocol = protocol;
@@ -77,14 +76,6 @@ public abstract class BaseResponse {
 
     public void setReturnCode(String returnCode) {
         this.returnCode = returnCode;
-    }
-
-    public String getBattleResult() {
-        return battleResult;
-    }
-
-    public void setBattleResult(String battleResult) {
-        this.battleResult = battleResult;
     }
 
     @Override

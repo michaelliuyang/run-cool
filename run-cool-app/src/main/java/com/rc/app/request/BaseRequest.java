@@ -1,9 +1,9 @@
 package com.rc.app.request;
 
 import com.rc.app.constants.RequestType;
-import com.rc.app.model.Mounts;
-import com.rc.app.model.Pet;
-import com.rc.app.model.Role;
+import com.rc.app.vo.MountsVO;
+import com.rc.app.vo.PetVO;
+import com.rc.app.vo.RoleVO;
 import com.rc.app.tools.DateUtil;
 import com.rc.app.tools.JsonUtil;
 import com.rc.app.tools.LogContext;
@@ -41,9 +41,9 @@ public abstract class BaseRequest {
     protected String userId;
     protected String mobilePhone;
     protected String nickName;
-    protected Role role;
-    protected Mounts mounts;
-    protected Pet pet;
+    protected RoleVO role;
+    protected MountsVO mounts;
+    protected PetVO pet;
     protected String imei;
 
     public void parse(HttpServletRequest request) throws Exception {
@@ -159,27 +159,27 @@ public abstract class BaseRequest {
         this.nickName = nickName;
     }
 
-    public Role getRole() {
+    public RoleVO getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleVO role) {
         this.role = role;
     }
 
-    public Mounts getMounts() {
+    public MountsVO getMounts() {
         return mounts;
     }
 
-    public void setMounts(Mounts mounts) {
+    public void setMounts(MountsVO mounts) {
         this.mounts = mounts;
     }
 
-    public Pet getPet() {
+    public PetVO getPet() {
         return pet;
     }
 
-    public void setPet(Pet pet) {
+    public void setPet(PetVO pet) {
         this.pet = pet;
     }
 
@@ -202,13 +202,13 @@ public abstract class BaseRequest {
         this.nickName = getJsonString(requestContent, JSON_NAME_NICK_NAME);
         this.imei = getJsonString(requestContent, JSON_NAME_IMEI);
         JSONObject roleJsonObject = getJsonObject(requestContent, JSON_NAME_ROLE);
-        this.role = new Role(getJsonString(roleJsonObject, JSON_NAME_NAME),
+        this.role = new RoleVO(getJsonString(roleJsonObject, JSON_NAME_NAME),
                 getJsonString(roleJsonObject, JSON_NAME_RANK));
         JSONObject mountsJsonObject = getJsonObject(requestContent, JSON_NAME_MOUNTS);
-        this.mounts = new Mounts(getJsonString(mountsJsonObject, JSON_NAME_NAME),
+        this.mounts = new MountsVO(getJsonString(mountsJsonObject, JSON_NAME_NAME),
                 getJsonString(mountsJsonObject, JSON_NAME_RANK));
         JSONObject petJsonObject = getJsonObject(requestContent, JSON_NAME_PET);
-        this.pet = new Pet(getJsonString(petJsonObject, JSON_NAME_NAME));
+        this.pet = new PetVO(getJsonString(petJsonObject, JSON_NAME_NAME));
     }
 
     private String getRequestUUID() {

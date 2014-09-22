@@ -12,15 +12,16 @@ import org.json.JSONObject;
 public class UploadBattleResultRequest extends BaseRequest {
 
     private static final String JSON_NAME_ARENA_ID = "arenaId";
-    private static final String JSON_NAME_SCORE = "score";
+    private static final String JSON_NAME_SCORE = "battleScore";
     private static final String JSON_NAME_RESULT = "result";
     private static final String JSON_NAME_IS_CONTINUE_WIN = "isContinueWin";
+    private static final String JSON_NAME_TARGET_USER_ID = "targetUserId";
 
     private long arenaId;
-    private int score;
+    private int battleScore;
     private BattleResult result;
-    private boolean isContinueWin;
-//    private target target;
+    private boolean isContinueWin = false;
+    private String targetUserId;
 
     @Override
     protected void setOtherField(JSONObject requestJsonObject) {
@@ -28,10 +29,12 @@ public class UploadBattleResultRequest extends BaseRequest {
         if (requestContent == null)
             return;
         this.arenaId = getJsonLong(requestContent, JSON_NAME_ARENA_ID);
-        this.score = getJsonInt(requestContent, JSON_NAME_SCORE);
-        this.result = BattleResult.getTypeByDisplayName(getJsonString(requestContent, JSON_NAME_RESULT));
+        this.battleScore = getJsonInt(requestContent, JSON_NAME_SCORE);
+        this.result = BattleResult.getTypeByDisplayName(getJsonString(requestContent,
+                JSON_NAME_RESULT));
         this.isContinueWin = Constants.RESPONSE_BOOLEAN_VALUE_YES.
                 equals(getJsonString(requestContent, JSON_NAME_IS_CONTINUE_WIN));
+        this.targetUserId = getJsonString(requestContent, JSON_NAME_TARGET_USER_ID);
     }
 
     public long getArenaId() {
@@ -42,12 +45,12 @@ public class UploadBattleResultRequest extends BaseRequest {
         this.arenaId = arenaId;
     }
 
-    public int getScore() {
-        return score;
+    public int getBattleScore() {
+        return battleScore;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setBattleScore(int battleScore) {
+        this.battleScore = battleScore;
     }
 
     public BattleResult getResult() {
@@ -64,6 +67,14 @@ public class UploadBattleResultRequest extends BaseRequest {
 
     public void setContinueWin(boolean isContinueWin) {
         this.isContinueWin = isContinueWin;
+    }
+
+    public String getTargetUserId() {
+        return targetUserId;
+    }
+
+    public void setTargetUserId(String targetUserId) {
+        this.targetUserId = targetUserId;
     }
 
     @Override

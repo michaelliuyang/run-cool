@@ -9,16 +9,9 @@ import org.json.JSONObject;
  */
 public class GetBattleTargetRequest extends BaseRequest {
 
-    private static final String JSON_NAME_ARENA_ID = "arenaId";
-
-    private long arenaId;
-
     @Override
     protected void setOtherField(JSONObject requestJsonObject) {
-        JSONObject requestContent = getRequestJsonObject(requestJsonObject);
-        if (requestContent == null)
-            return;
-        this.arenaId = getJsonLong(requestContent, JSON_NAME_ARENA_ID);
+        //do nothing
     }
 
     @Override
@@ -26,11 +19,4 @@ public class GetBattleTargetRequest extends BaseRequest {
         return LoggerNameConstants.GET_BATTLE_TARGET_LOGGER;
     }
 
-    public long getArenaId() {
-        return arenaId;
-    }
-
-    public void setArenaId(long arenaId) {
-        this.arenaId = arenaId;
-    }
 }

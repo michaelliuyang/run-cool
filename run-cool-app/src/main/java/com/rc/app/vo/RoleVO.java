@@ -1,18 +1,18 @@
-package com.rc.app.model;
+package com.rc.app.vo;
 
 /**
- * 坐骑
+ * 角色
  * Created by michael on 14-9-18.
  */
-public class Mounts {
+public class RoleVO {
 
     private String name;
     private String rank;
 
-    public Mounts() {
+    public RoleVO() {
     }
 
-    public Mounts(String name, String rank) {
+    public RoleVO(String name, String rank) {
         this.name = name;
         this.rank = rank;
     }

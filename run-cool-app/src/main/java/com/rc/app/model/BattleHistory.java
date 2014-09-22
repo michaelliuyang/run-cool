@@ -9,26 +9,26 @@ import com.rc.app.tools.DateUtil;
  */
 public class BattleHistory extends BaseModel {
 
-    private Long userId;
-    private Long targetUserId;
+    private String userId;
+    private String targetUserId;
     private Long arenaId;
     private BattleResult result;
     private Integer score;
     private String createDate = DateUtil.format(createTime, DateUtil.YYYYMMDD);
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Long getTargetUserId() {
+    public String getTargetUserId() {
         return targetUserId;
     }
 
-    public void setTargetUserId(Long targetUserId) {
+    public void setTargetUserId(String targetUserId) {
         this.targetUserId = targetUserId;
     }
 

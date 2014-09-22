@@ -17,6 +17,10 @@ public interface UserMapper {
 
     void updateUserBasicInfo(User user);
 
+    void updateUserScoreInfo(User user);
+
     List<User> findByScoreAndUserId(Map<String, Object> params);
+
+    User findRandom(String userId);
 
 }

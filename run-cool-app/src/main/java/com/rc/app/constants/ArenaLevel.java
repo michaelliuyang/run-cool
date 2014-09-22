@@ -6,6 +6,6 @@ package com.rc.app.constants;
  */
 public enum ArenaLevel {
 
-    ONE, TWO, THREE
+    ONE, TWO, THREE, NOT_JOIN
 
 }

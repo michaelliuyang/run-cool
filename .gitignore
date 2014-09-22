@@ -11,7 +11,7 @@ build.gradle
 gradlew*
 .DS_Store
 */target
+*/V1
 *.class
 *.jar
 *.war
-*/backup

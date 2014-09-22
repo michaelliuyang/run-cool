@@ -1,10 +1,10 @@
-package com.rc.app.model;
+package com.rc.app.vo;
 
 /**
  * 排行榜信息
  * Created by michael on 14-9-20.
  */
-public class Ranking {
+public class RankingVO {
 
     private int ranking;
     private long uid;

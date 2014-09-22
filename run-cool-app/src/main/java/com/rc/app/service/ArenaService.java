@@ -1,10 +1,11 @@
 package com.rc.app.service;
 
+import com.rc.app.constants.ArenaLevel;
 import com.rc.app.constants.PropConfig;
 import com.rc.app.mapper.ArenaMapper;
 import com.rc.app.model.Arena;
-import com.rc.app.model.Prop;
 import com.rc.app.tools.LogContext;
+import com.rc.app.vo.PropVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,24 +22,29 @@ public class ArenaService {
     @Autowired
     private ArenaMapper arenaMapper;
 
-    public List<Arena> findAll() {
+    public List<Arena> getArenaList(ArenaLevel level) {
         List<Arena> arenas = new ArrayList<Arena>();
         try {
-            arenas = arenaMapper.findAll();
+            if (!ArenaLevel.NOT_JOIN.equals(level))
+                arenas = arenaMapper.findByLevel(level);
         } catch (Exception e) {
             LogContext.instance().error(e, "获取竞技场集合失败");
         }
         return arenas;
     }
 
-    public List<Prop> getPropList() {
+    public Arena findById(long id) {
+        return arenaMapper.findById(id);
+    }
+
+    public List<PropVO> getPropList() {
         PropConfig[] propConfigs = PropConfig.values();
-        List<Prop> propList = new ArrayList<Prop>(propConfigs.length);
+        List<PropVO> propVOList = new ArrayList<PropVO>(propConfigs.length);
         for (PropConfig pc : propConfigs) {
-            Prop prop = new Prop(pc.getName(), pc.getLimit());
-            propList.add(prop);
+            PropVO propVO = new PropVO(pc.getName(), pc.getLimit());
+            propVOList.add(propVO);
         }
-        return propList;
+        return propVOList;
     }
 
 }
