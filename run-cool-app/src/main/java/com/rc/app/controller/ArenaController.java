@@ -5,7 +5,6 @@ import com.rc.app.constants.ProtocolConstants;
 import com.rc.app.constants.RequestType;
 import com.rc.app.constants.ResponseReturnCode;
 import com.rc.app.model.Arena;
-import com.rc.app.model.BattleHistory;
 import com.rc.app.model.User;
 import com.rc.app.request.GetArenaRequest;
 import com.rc.app.response.GetArenaResponse;
@@ -15,7 +14,6 @@ import com.rc.app.tools.LogContext;
 import com.rc.app.vo.ArenaVO;
 import com.rc.app.vo.BattleHistoryVO;
 import com.rc.app.vo.PropVO;
-import com.rc.app.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +47,7 @@ public class ArenaController extends BaseController {
             GetArenaResponse getArenaResponse = new GetArenaResponse(ProtocolConstants.PROTOCOL_V1_0,
                     getArenaRequest.getUserId());
             if (!isRightRequest(getArenaRequest, RequestType.GET_ARENA)) {
-                logContext.warn("Illegal get arena request");
+                logContext.warn("Illegal request");
                 getArenaResponse.setReturnCode(ResponseReturnCode.ILLEGAL_REQUEST.getIndex());
                 return getArenaResponse.convert2ByteResult();
             }
@@ -62,33 +60,15 @@ public class ArenaController extends BaseController {
             getArenaResponse.setAllow(user.isAllowJoinArena() ?
                     Constants.RESPONSE_BOOLEAN_VALUE_YES : Constants.RESPONSE_BOOLEAN_VALUE_NO);
             if (getArenaRequest.isGetBattleInfo()) {
-                List<BattleHistory> battleHistoryList = battleHistoryService.
+                List<BattleHistoryVO> battleHistoryVOList = battleHistoryService.
                         getRecentBattleHistoryList(user.getUserId());
-                getArenaResponse.setBattleHistorys(convert2BattleHistoryVOList(battleHistoryList));
+                getArenaResponse.setBattleHistorys(battleHistoryVOList);
             }
             return getArenaResponse.convert2ByteResult();
         } catch (Exception e) {
-            logContext.error(e, "Get arena error");
+            logContext.error(e, "Get arena request error");
             throw e;
         }
-    }
-
-    private List<BattleHistoryVO> convert2BattleHistoryVOList(List<BattleHistory> battleHistoryList)
-            throws Exception {
-        if (battleHistoryList == null || battleHistoryList.isEmpty())
-            return new ArrayList<BattleHistoryVO>();
-        int listSize = battleHistoryList.size();
-        List<BattleHistoryVO> voList = new ArrayList<BattleHistoryVO>(listSize);
-        for (BattleHistory bt : battleHistoryList) {
-            BattleHistoryVO vo = new BattleHistoryVO(bt);
-            User targetUser = userService.findByUserId(bt.getTargetUserId());
-            if (targetUser == null)
-                continue;
-            UserVO userVO = new UserVO(targetUser);
-            vo.setTargetUser(userVO);
-            voList.add(vo);
-        }
-        return voList;
     }
 
     private List<ArenaVO> convert2ArenaVOList(List<Arena> arenaList) {

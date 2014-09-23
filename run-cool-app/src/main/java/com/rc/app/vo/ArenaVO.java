@@ -18,6 +18,9 @@ public class ArenaVO extends BaseVO<Arena> {
     private Integer rewardScore;
     private Double continueWinAddPercent;
 
+    public ArenaVO() {
+    }
+
     public ArenaVO(Arena model) {
         super(model);
     }

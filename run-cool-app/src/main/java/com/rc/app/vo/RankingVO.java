@@ -7,7 +7,7 @@ package com.rc.app.vo;
 public class RankingVO {
 
     private int ranking;
-    private long uid;
+    private String userId;
     private String nickName;
     private int score;
 
@@ -19,12 +19,12 @@ public class RankingVO {
         this.ranking = ranking;
     }
 
-    public long getUid() {
-        return uid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUid(long uid) {
-        this.uid = uid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getNickName() {

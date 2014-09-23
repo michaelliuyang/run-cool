@@ -13,6 +13,9 @@ public class BattleHistoryVO extends BaseVO<BattleHistory> {
     private String result;
     private Integer score;
 
+    public BattleHistoryVO() {
+    }
+
     public BattleHistoryVO(BattleHistory model) {
         super(model);
     }

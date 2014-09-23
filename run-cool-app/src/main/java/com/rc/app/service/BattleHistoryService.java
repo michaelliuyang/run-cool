@@ -4,6 +4,7 @@ import com.rc.app.mapper.BattleHistoryMapper;
 import com.rc.app.model.BattleHistory;
 import com.rc.app.request.UploadBattleResultRequest;
 import com.rc.app.tools.LogContext;
+import com.rc.app.vo.BattleHistoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,8 @@ public class BattleHistoryService {
     @Autowired
     private BattleHistoryMapper battleHistoryMapper;
 
-    public List<BattleHistory> getRecentBattleHistoryList(String userId) {
-        List<BattleHistory> result = new ArrayList<BattleHistory>();
+    public List<BattleHistoryVO> getRecentBattleHistoryList(String userId) {
+        List<BattleHistoryVO> result = new ArrayList<BattleHistoryVO>();
         try {
             result = battleHistoryMapper.findRecentByUserId(userId);
         } catch (Exception e) {

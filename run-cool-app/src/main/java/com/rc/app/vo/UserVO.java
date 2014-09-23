@@ -18,8 +18,9 @@ public class UserVO extends BaseVO<User> {
     private String mountsRank;
     private Integer score;
     private Integer maxBattleScore;
-    private Integer winCount;
-    private Integer loseCount;
+
+    public UserVO() {
+    }
 
     public UserVO(User model) {
         super(model);
@@ -117,22 +118,6 @@ public class UserVO extends BaseVO<User> {
 
     public void setMaxBattleScore(Integer maxBattleScore) {
         this.maxBattleScore = maxBattleScore;
-    }
-
-    public Integer getWinCount() {
-        return winCount;
-    }
-
-    public void setWinCount(Integer winCount) {
-        this.winCount = winCount;
-    }
-
-    public Integer getLoseCount() {
-        return loseCount;
-    }
-
-    public void setLoseCount(Integer loseCount) {
-        this.loseCount = loseCount;
     }
 
 }

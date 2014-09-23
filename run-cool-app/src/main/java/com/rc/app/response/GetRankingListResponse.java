@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class GetRankingListResponse extends BaseResponse {
 
-    private List<RankingVO> scoreRankingVOList;
-    private List<RankingVO> battleRankingVOList;
+    private List<RankingVO> scoreRankingList;
+    private List<RankingVO> battleRankingList;
 
     public GetRankingListResponse(String protocol, String userId) {
         super(protocol, userId);
@@ -20,22 +20,22 @@ public class GetRankingListResponse extends BaseResponse {
 
     @Override
     protected RequestType requestType() {
-        return null;
+        return RequestType.GET_RANKING_LIST;
     }
 
-    public List<RankingVO> getScoreRankingVOList() {
-        return scoreRankingVOList;
+    public List<RankingVO> getScoreRankingList() {
+        return scoreRankingList;
     }
 
-    public void setScoreRankingVOList(List<RankingVO> scoreRankingVOList) {
-        this.scoreRankingVOList = scoreRankingVOList;
+    public void setScoreRankingList(List<RankingVO> scoreRankingList) {
+        this.scoreRankingList = scoreRankingList;
     }
 
-    public List<RankingVO> getBattleRankingVOList() {
-        return battleRankingVOList;
+    public List<RankingVO> getBattleRankingList() {
+        return battleRankingList;
     }
 
-    public void setBattleRankingVOList(List<RankingVO> battleRankingVOList) {
-        this.battleRankingVOList = battleRankingVOList;
+    public void setBattleRankingList(List<RankingVO> battleRankingList) {
+        this.battleRankingList = battleRankingList;
     }
 }

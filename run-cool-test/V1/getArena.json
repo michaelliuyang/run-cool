@@ -17,6 +17,6 @@
         "pet": {
             "name": "peter"
         },
-        "isGetBattleInfo": "0"
+        "isGetBattleInfo": "1"
     }
 }

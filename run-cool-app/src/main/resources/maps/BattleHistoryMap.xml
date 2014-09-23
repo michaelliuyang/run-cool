@@ -2,20 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rc.app.mapper.BattleHistoryMapper">
 
-    <resultMap id="battleHistoryResult" type="com.rc.app.model.BattleHistory">
-        <result property="id" column="ID"/>
-        <result property="userId" column="USER_ID"/>
-        <result property="targetUserId" column="TARGET_USER_ID"/>
-        <result property="result" column="RESULT"/>
-        <result property="score" column="SCORE"/>
+    <resultMap id="bhComplexResultMap" type="com.rc.app.vo.BattleHistoryVO">
+        <result property="result" column="U_RESULT"/>
+        <result property="score" column="U_SCORE"/>
         <result property="arenaId" column="ARENA_ID"/>
+        <result property="targetUser.userId" column="T_USER_ID"/>
+        <result property="targetUser.nickName" column="T_NICK_NAME"/>
+        <result property="targetUser.mobilePhone" column="T_MOBILE_PHONE"/>
+        <result property="targetUser.mountsName" column="T_MOUNTS_NAME"/>
+        <result property="targetUser.mountsRank" column="T_MOUNTS_RANK"/>
+        <result property="targetUser.petName" column="T_PET_NAME"/>
+        <result property="targetUser.roleName" column="T_ROLE_NAME"/>
+        <result property="targetUser.roleRank" column="T_ROLE_RANK"/>
+        <result property="targetUser.maxBattleScore" column="T_MAX_BATTLE_SCORE"/>
+        <result property="targetUser.score" column="T_SCORE"/>
     </resultMap>
 
-    <select id="findRecentByUserId" parameterType="java.lang.String" resultMap="battleHistoryResult">
+    <select id="findRecentByUserId" parameterType="java.lang.String" resultMap="bhComplexResultMap">
         <![CDATA[
-          SELECT ID,USER_ID,TARGET_USER_ID,RESULT,SCORE,ARENA_ID
-          FROM TBL_BATTLE_HISTORY
-          WHERE USER_ID = #{userId} ORDER BY CREATE_TIME DESC LIMIT 5
+            SELECT B.TARGET_USER_ID AS T_USER_ID,B.RESULT AS U_RESULT,B.SCORE AS U_SCORE,B.ARENA_ID AS ARENA_ID,
+            U.NICK_NAME AS T_NICK_NAME,U.MOBILE_PHONE AS T_MOBILE_PHONE,U.MOUNTS_NAME AS T_MOUNTS_NAME,
+            U.MOUNTS_RANK AS T_MOUNTS_RANK,U.PET_NAME AS T_PET_NAME,U.ROLE_NAME AS T_ROLE_NAME,
+            U.ROLE_RANK AS T_ROLE_RANK,U.MAX_BATTLE_SCORE AS T_MAX_BATTLE_SCORE,U.SCORE AS T_SCORE
+            FROM TBL_BATTLE_HISTORY AS B
+            INNER JOIN TBL_USER AS U
+            ON B.TARGET_USER_ID = U.USER_ID
+            WHERE B.USER_ID = #{userId} ORDER BY B.CREATE_TIME DESC LIMIT 5
         ]]>
     </select>
 

@@ -1,18 +1,19 @@
 package com.rc.app.controller;
 
-import com.rc.app.constants.BattleResult;
 import com.rc.app.constants.ProtocolConstants;
 import com.rc.app.constants.RequestType;
 import com.rc.app.constants.ResponseReturnCode;
-import com.rc.app.model.Arena;
 import com.rc.app.model.User;
 import com.rc.app.request.GetBattleTargetRequest;
+import com.rc.app.request.GetRankingListRequest;
 import com.rc.app.request.UploadBattleResultRequest;
 import com.rc.app.response.GetBattleTargetResponse;
+import com.rc.app.response.GetRankingListResponse;
 import com.rc.app.response.UploadBattleResultResponse;
-import com.rc.app.service.ArenaService;
-import com.rc.app.service.BattleHistoryService;
+import com.rc.app.service.RankingService;
+import com.rc.app.service.UploadResultService;
 import com.rc.app.tools.LogContext;
+import com.rc.app.vo.RankingVO;
 import com.rc.app.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 对战的controller
@@ -31,9 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 public class BattleController extends BaseController {
 
     @Autowired
-    private BattleHistoryService battleHistoryService;
+    private UploadResultService uploadResultService;
     @Autowired
-    private ArenaService arenaService;
+    private RankingService rankingService;
 
     @RequestMapping(value = "/get_target", method = RequestMethod.POST)
     @ResponseBody
@@ -45,7 +47,7 @@ public class BattleController extends BaseController {
             GetBattleTargetResponse getBattleTargetResponse = new GetBattleTargetResponse(ProtocolConstants.PROTOCOL_V1_0,
                     getBattleTargetRequest.getUserId());
             if (!isRightRequest(getBattleTargetRequest, RequestType.GET_BATTLE_TARGET)) {
-                logContext.warn("Illegal get battle target request");
+                logContext.warn("Illegal request");
                 getBattleTargetResponse.setReturnCode(ResponseReturnCode.ILLEGAL_REQUEST.getIndex());
                 return getBattleTargetResponse.convert2ByteResult();
             }
@@ -58,7 +60,7 @@ public class BattleController extends BaseController {
             getBattleTargetResponse.setBattleTargetUser(new UserVO(targetUser));
             return getBattleTargetResponse.convert2ByteResult();
         } catch (Exception e) {
-            logContext.error(e, "Get battle target error");
+            logContext.error(e, "Get battle target request error");
             throw e;
         }
     }
@@ -73,23 +75,17 @@ public class BattleController extends BaseController {
             UploadBattleResultResponse uploadBattleResultResponse =
                     new UploadBattleResultResponse(ProtocolConstants.PROTOCOL_V1_0,
                             uploadBattleResultRequest.getUserId());
-            if (!isRightRequest(uploadBattleResultRequest, RequestType.GET_BATTLE_TARGET)) {
-                logContext.warn("Illegal get battle target request");
+            if (!isRightRequest(uploadBattleResultRequest, RequestType.UPLOAD_BATTLE_RESULT)) {
+                logContext.warn("Illegal request");
                 uploadBattleResultResponse.setReturnCode(ResponseReturnCode.ILLEGAL_REQUEST
                         .getIndex());
                 return uploadBattleResultResponse.convert2ByteResult();
             }
             User user = dealCommonBiz(uploadBattleResultRequest, uploadBattleResultResponse);
-            battleHistoryService.insert(uploadBattleResultRequest);
-            int rewardScore = 0;
-            if (BattleResult.WIN.equals(uploadBattleResultRequest.getResult())) {
-                Arena arena = arenaService.findById(uploadBattleResultRequest.getArenaId());
-                rewardScore = arena.getRewardScore();
-            }
-            userService.updateUserScoreInfo(user, rewardScore, uploadBattleResultRequest);
+            uploadResultService.uploadResult(uploadBattleResultRequest, user);
             return uploadBattleResultResponse.convert2ByteResult();
         } catch (Exception e) {
-            logContext.error(e, "Upload battle result error");
+            logContext.error(e, "Upload battle result request error");
             throw e;
         }
     }
@@ -97,7 +93,31 @@ public class BattleController extends BaseController {
     @RequestMapping(value = "/ranking", method = RequestMethod.POST)
     @ResponseBody
     public byte[] getRanking(HttpServletRequest request) throws Exception {
-        return null;
+        LogContext logContext = LogContext.instance();
+        try {
+            GetRankingListRequest getRankingListRequest = new GetRankingListRequest();
+            getRankingListRequest.parse(request);
+            GetRankingListResponse getRankingListResponse =
+                    new GetRankingListResponse(ProtocolConstants.PROTOCOL_V1_0,
+                            getRankingListRequest.getUserId());
+            if (!isRightRequest(getRankingListRequest, RequestType.GET_RANKING_LIST)) {
+                logContext.warn("Illegal request");
+                getRankingListResponse.setReturnCode(ResponseReturnCode.ILLEGAL_REQUEST
+                        .getIndex());
+                return getRankingListResponse.convert2ByteResult();
+            }
+            User user = dealCommonBiz(getRankingListRequest, getRankingListResponse);
+            List<RankingVO> scoreRankingList = rankingService.
+                    getRankingList(user, RankingService.RANKING_SCORE_TYPE);
+            List<RankingVO> battleScoreRankingList = rankingService.
+                    getRankingList(user, RankingService.RANKING_BATTLE_SCORE_TYPE);
+            getRankingListResponse.setScoreRankingList(scoreRankingList);
+            getRankingListResponse.setBattleRankingList(battleScoreRankingList);
+            return getRankingListResponse.convert2ByteResult();
+        } catch (Exception e) {
+            logContext.error(e, "Get ranking list request error");
+            throw e;
+        }
     }
 
 }

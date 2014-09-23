@@ -13,6 +13,8 @@ public abstract class BaseVO<T> {
         parseFrom(model);
     }
 
+    public BaseVO(){}
+
     protected abstract void parseFrom(T model);
 
     @Override

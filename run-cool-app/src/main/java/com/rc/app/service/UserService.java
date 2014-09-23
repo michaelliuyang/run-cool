@@ -1,5 +1,6 @@
 package com.rc.app.service;
 
+import com.rc.app.constants.RequestType;
 import com.rc.app.mapper.UserMapper;
 import com.rc.app.model.User;
 import com.rc.app.request.BaseRequest;
@@ -79,7 +80,7 @@ public class UserService {
             if (user.getMaxBattleScore() < request.getBattleScore()) {
                 user.setMaxBattleScore(request.getBattleScore());
             }
-            userMapper.updateUserScoreInfo(user);
+            userMapper.updateUser(user);
         } catch (Exception e) {
             LogContext.instance().error(e, "Update user score info error");
             throw e;
@@ -108,7 +109,9 @@ public class UserService {
             resultUser = insertUser(request);
         } else {
             resultUser = userFromDB;
-            updateUserBasicInfo(request, resultUser);
+            if (!RequestType.UPLOAD_BATTLE_RESULT.equals(request.getType())) {
+                updateUserBasicInfo(request, resultUser);
+            }
         }
         return resultUser;
     }

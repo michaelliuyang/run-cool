@@ -9,6 +9,9 @@ public class PropVO {
     private String name;
     private int limit;
 
+    public PropVO() {
+    }
+
     public PropVO(String name, int limit) {
         this.name = name;
         this.limit = limit;

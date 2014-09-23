@@ -1,6 +1,7 @@
 package com.rc.app.mapper;
 
 import com.rc.app.model.BattleHistory;
+import com.rc.app.vo.BattleHistoryVO;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface BattleHistoryMapper {
 
-    List<BattleHistory> findRecentByUserId(String userId);
+    List<BattleHistoryVO> findRecentByUserId(String userId);
 
     void insertBattleHistory(BattleHistory battleHistory);
 

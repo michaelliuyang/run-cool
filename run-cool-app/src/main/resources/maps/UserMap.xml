@@ -18,6 +18,20 @@
         <result property="isContinueWin" column="IS_CONTINUE_WIN"/>
     </resultMap>
 
+    <resultMap id="rankScoreResult" type="com.rc.app.vo.RankingVO">
+        <result property="ranking" column="NUM"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="nickName" column="NICK_NAME"/>
+        <result property="score" column="SCORE"/>
+    </resultMap>
+
+    <resultMap id="rankBattleScoreResult" type="com.rc.app.vo.RankingVO">
+        <result property="ranking" column="NUM"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="nickName" column="NICK_NAME"/>
+        <result property="score" column="MAX_BATTLE_SCORE"/>
+    </resultMap>
+
     <select id="findByUserId" parameterType="java.lang.String" resultMap="userResult">
       <![CDATA[
           SELECT ID,USER_ID,MOBILE_PHONE,NICK_NAME,ROLE_NAME,
@@ -48,6 +62,20 @@
         ]]>
     </select>
 
+    <select id="getScoreRanking" resultMap="rankScoreResult">
+        <![CDATA[
+          SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,SCORE
+          FROM TBL_USER,(SELECT @i:=0) AS IT ORDER BY SCORE DESC LIMIT 100
+        ]]>
+    </select>
+
+    <select id="getBattleScoreRanking" resultMap="rankBattleScoreResult">
+        <![CDATA[
+          SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,MAX_BATTLE_SCORE
+          FROM TBL_USER,(SELECT @i:=0) AS IT ORDER BY MAX_BATTLE_SCORE DESC LIMIT 100
+        ]]>
+    </select>
+
     <update id="updateUserBasicInfo" parameterType="com.rc.app.model.User">
         <![CDATA[
             UPDATE TBL_USER
@@ -58,10 +86,12 @@
         ]]>
     </update>
 
-    <update id="updateUserScoreInfo" parameterType="com.rc.app.model.User">
+    <update id="updateUser" parameterType="com.rc.app.model.User">
         <![CDATA[
             UPDATE TBL_USER
-            SET SCORE = #{score},MAX_BATTLE_SCORE = #{maxBattleScore},
+            SET MOBILE_PHONE = #{mobilePhone},NICK_NAME = #{nickName},PET_NAME = #{petName},
+                ROLE_NAME = #{roleName},ROLE_RANK = #{roleRank},MOUNTS_NAME = #{mountsName},
+                MOUNTS_RANK = #{mountsRank},SCORE = #{score},MAX_BATTLE_SCORE = #{maxBattleScore},
                 JOIN_ARENA_COUNT = #{joinArenaCount},IS_CONTINUE_WIN = #{isContinueWin}
             WHERE USER_ID = #{userId}
         ]]>
