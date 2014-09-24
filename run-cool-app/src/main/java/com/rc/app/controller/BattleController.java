@@ -111,7 +111,7 @@ public class BattleController extends BaseController {
             List<RankingVO> battleScoreRankingList = rankingService.
                     getBattleScoreRankingList(user.getUserId());
             getRankingListResponse.setScoreRankingList(scoreRankingList);
-            getRankingListResponse.setBattleRankingList(battleScoreRankingList);
+            getRankingListResponse.setBattleScoreRankingList(battleScoreRankingList);
             return getRankingListResponse.convert2ByteResult();
         } catch (Exception e) {
             logContext.error(e, "Get ranking list request error");

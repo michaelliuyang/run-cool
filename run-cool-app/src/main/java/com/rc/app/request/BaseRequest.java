@@ -26,7 +26,7 @@ public abstract class BaseRequest {
     protected static final String JSON_NAME_REQUEST = "request";
     protected static final String JSON_NAME_PROTOCOL = "protocol";
     protected static final String JSON_NAME_REQUEST_TYPE = "type";
-    protected static final String JSON_NAME_UID_ID = "uid";
+    protected static final String JSON_NAME_USER_ID = "userId";
     protected static final String JSON_NAME_MOBILE_PHONE = "mobilePhone";
     protected static final String JSON_NAME_NICK_NAME = "nickName";
     protected static final String JSON_NAME_ROLE = "role";
@@ -202,7 +202,7 @@ public abstract class BaseRequest {
             return;
         this.protocol = getJsonString(requestContent, JSON_NAME_PROTOCOL);
         this.type = RequestType.getTypeByIndex(getJsonString(requestContent, JSON_NAME_REQUEST_TYPE));
-        this.userId = getJsonString(requestContent, JSON_NAME_UID_ID);
+        this.userId = getJsonString(requestContent, JSON_NAME_USER_ID);
         this.mobilePhone = getJsonString(requestContent, JSON_NAME_MOBILE_PHONE);
         this.nickName = getJsonString(requestContent, JSON_NAME_NICK_NAME);
         this.imei = getJsonString(requestContent, JSON_NAME_IMEI);

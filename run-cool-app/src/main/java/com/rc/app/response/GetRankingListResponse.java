@@ -12,7 +12,7 @@ import java.util.List;
 public class GetRankingListResponse extends BaseResponse {
 
     private List<RankingVO> scoreRankingList;
-    private List<RankingVO> battleRankingList;
+    private List<RankingVO> battleScoreRankingList;
 
     public GetRankingListResponse(String protocol, String userId) {
         super(protocol, userId);
@@ -31,11 +31,11 @@ public class GetRankingListResponse extends BaseResponse {
         this.scoreRankingList = scoreRankingList;
     }
 
-    public List<RankingVO> getBattleRankingList() {
-        return battleRankingList;
+    public List<RankingVO> getBattleScoreRankingList() {
+        return battleScoreRankingList;
     }
 
-    public void setBattleRankingList(List<RankingVO> battleRankingList) {
-        this.battleRankingList = battleRankingList;
+    public void setBattleScoreRankingList(List<RankingVO> battleScoreRankingList) {
+        this.battleScoreRankingList = battleScoreRankingList;
     }
 }
