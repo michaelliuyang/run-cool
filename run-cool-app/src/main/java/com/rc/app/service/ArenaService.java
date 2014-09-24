@@ -22,22 +22,42 @@ public class ArenaService {
     @Autowired
     private ArenaMapper arenaMapper;
 
+    /**
+     * 根据等级获取竞技场集合
+     *
+     * @param level 等级
+     * @return 竞技场集合
+     */
     public List<Arena> getArenaList(ArenaLevel level) {
         List<Arena> arenas = new ArrayList<Arena>();
         try {
-            if (!ArenaLevel.NOT_JOIN.equals(level))
+            if (!ArenaLevel.NOT_JOIN.equals(level)) {
+                LogContext.instance().debug("Get arenas by level");
                 arenas = arenaMapper.findByLevel(level);
+            }
         } catch (Exception e) {
             LogContext.instance().error(e, "获取竞技场集合失败");
         }
         return arenas;
     }
 
+    /**
+     * 通过ID获取竞技场对象
+     *
+     * @param id 竞技场ID
+     * @return 竞技场对象
+     */
     public Arena findById(long id) {
         return arenaMapper.findById(id);
     }
 
+    /**
+     * 获取竞技场道具集合
+     *
+     * @return 竞技场道具集合
+     */
     public List<PropVO> getPropList() {
+        LogContext.instance().debug("Get prop list");
         PropConfig[] propConfigs = PropConfig.values();
         List<PropVO> propVOList = new ArrayList<PropVO>(propConfigs.length);
         for (PropConfig pc : propConfigs) {

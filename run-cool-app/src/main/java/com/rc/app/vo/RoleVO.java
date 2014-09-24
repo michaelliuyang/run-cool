@@ -1,7 +1,7 @@
 package com.rc.app.vo;
 
 /**
- * 角色
+ * 角色VO
  * Created by michael on 14-9-18.
  */
 public class RoleVO {

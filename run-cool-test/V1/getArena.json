@@ -2,21 +2,21 @@
     "request": {
         "protocol": "1.0",
         "type": "1",
-        "imei":"013354000103123",
-        "uid": "bc928dfd2aa911f65580b6a3e2f5192e",
-        "mobilePhone": "13811312012",
-        "nickName": "michael",
+        "imei":"013354000103155",
+        "uid": "",
+        "mobilePhone": "13811312013",
+        "nickName": "michael1",
         "role": {
-            "name": "magic",
+            "name": "magic1",
             "rank": "3"
         },
         "mounts": {
-            "name": "bird",
+            "name": "bird1",
             "rank": "8"
         },
         "pet": {
-            "name": "peter"
+            "name": "peter1"
         },
-        "isGetBattleInfo": "1"
+        "isGetBattleInfo": "0"
     }
 }

@@ -46,6 +46,9 @@ public abstract class BaseRequest {
     protected PetVO pet;
     protected String imei;
 
+    /**
+     * 解析客户端请求
+     */
     public void parse(HttpServletRequest request) throws Exception {
         LogContext logContext = LogContext.instance();
         logContext.clear();
@@ -54,12 +57,12 @@ public abstract class BaseRequest {
         try {
             byte[] requestData = IOUtils.toByteArray(request.getInputStream());
             if (requestData == null || requestData.length <= 0) {
-                logContext.error("requestData为空,转化请求报文失败");
+                logContext.error("RequestData is empty,parse request error");
                 return;
             }
             String requestString = new String(requestData, "UTF-8");
             if (StringUtils.isBlank(requestString)) {
-                logContext.error("requestString为空,转化请求报文失败");
+                logContext.error("RequestString is empty,parse request error");
                 return;
             }
             JSONObject requestJsonObject = JsonUtil.jsonStr2JsonObject(requestString);
@@ -73,7 +76,7 @@ public abstract class BaseRequest {
             request.setAttribute("requestProtocol", this.protocol);
             request.setAttribute("requestUserId", this.userId);
         } catch (Exception e) {
-            logContext.error(e, "转化请求报文失败");
+            logContext.error(e, "Parse request error");
             throw e;
         }
     }

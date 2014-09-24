@@ -36,6 +36,7 @@ public class BaseTest {
     public class ProtocolFileName {
         public final static String REQUEST_GET_ARENA = "getArena.json";
         public final static String REQUEST_GET_BATTLE_TARGET = "getBattleTarget.json";
+        public final static String REQUEST_UPLOAD = "upload.json";
         public final static String REQUEST_RANKING = "ranking.json";
     }
 }

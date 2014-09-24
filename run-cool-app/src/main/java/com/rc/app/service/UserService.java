@@ -29,6 +29,13 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 更加user id获取用户
+     *
+     * @param userId 用户ID
+     * @return 用户对象
+     * @throws Exception
+     */
     public User findByUserId(String userId) throws Exception {
         User user = null;
         try {
@@ -40,6 +47,15 @@ public class UserService {
         return user;
     }
 
+    /**
+     * 检查用户
+     * 如果发现DB没有,创建
+     * 如果发现有读取出来,并更新基本信息
+     *
+     * @param request 请求对象
+     * @return 检查后的用户对象
+     * @throws Exception
+     */
     public User checkUser(BaseRequest request) throws Exception {
         User resultUser = null;
         if (StringUtils.isBlank(request.getUserId())) {
@@ -56,6 +72,14 @@ public class UserService {
         return resultUser;
     }
 
+    /**
+     * 获取对战对手
+     *
+     * @param isContinueWin  是否是连胜
+     * @param maxBattleScore 用户最高得分
+     * @param userId         用户ID
+     * @return 对战对手
+     */
     public User getTargetUser(boolean isContinueWin, int maxBattleScore, String userId) {
         double leftPercent = isContinueWin ? 0.1d : 0.15d;
         double rightPercent = isContinueWin ? 0.1d : 0.05d;
@@ -71,6 +95,14 @@ public class UserService {
         return userList.get((int) random);
     }
 
+    /**
+     * 更新用户得分情况信息
+     *
+     * @param user        用户对象
+     * @param rewardScore 奖励积分
+     * @param request     上传对战结果请求对象
+     * @throws Exception
+     */
     public void updateUserScoreInfo(User user, int rewardScore,
                                     UploadBattleResultRequest request) throws Exception {
         try {
@@ -78,6 +110,7 @@ public class UserService {
             user.updateJoinArenaCount();
             user.setIsContinueWin(request.isContinueWin());
             if (user.getMaxBattleScore() < request.getBattleScore()) {
+                LogContext.instance().debug("Max battle update");
                 user.setMaxBattleScore(request.getBattleScore());
             }
             userMapper.updateUser(user);
@@ -110,6 +143,7 @@ public class UserService {
         } else {
             resultUser = userFromDB;
             if (!RequestType.UPLOAD_BATTLE_RESULT.equals(request.getType())) {
+                LogContext.instance().debug("Is not upload battle result request,update user basic info");
                 updateUserBasicInfo(request, resultUser);
             }
         }

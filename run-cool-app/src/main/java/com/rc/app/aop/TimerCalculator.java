@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 
 /**
+ * 记录请求时间
  * Created by michael on 2014/9/18.
  */
 public class TimerCalculator {

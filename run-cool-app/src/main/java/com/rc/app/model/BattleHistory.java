@@ -9,11 +9,29 @@ import com.rc.app.tools.DateUtil;
  */
 public class BattleHistory extends BaseModel {
 
+    /**
+     * 用户ID
+     */
     private String userId;
+    /**
+     * 对手的ID
+     */
     private String targetUserId;
+    /**
+     * 竞技场ID
+     */
     private Long arenaId;
+    /**
+     * 对战结果 分为WIN LOSE
+     */
     private BattleResult result;
+    /**
+     * 对战的得分
+     */
     private Integer score;
+    /**
+     * 对战的日期字符串
+     */
     private String createDate = DateUtil.format(createTime, DateUtil.YYYYMMDD);
 
     public String getUserId() {

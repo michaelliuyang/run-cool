@@ -26,6 +26,11 @@ public abstract class BaseResponse {
         this.userId = userId;
     }
 
+    /**
+     * 把Response对象转化成json bytes
+     *
+     * @return 回复报文
+     */
     public byte[] convert2ByteResult() {
         byte[] result = null;
         try {

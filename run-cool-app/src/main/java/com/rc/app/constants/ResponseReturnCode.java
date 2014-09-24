@@ -1,6 +1,7 @@
 package com.rc.app.constants;
 
 /**
+ * 返回值
  * Created by michael 2014/9/18.
  */
 public enum ResponseReturnCode {

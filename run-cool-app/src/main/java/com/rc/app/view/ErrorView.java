@@ -9,7 +9,8 @@ import java.io.OutputStream;
 import java.util.Map;
 
 /**
- * 回复通用异常回复报文
+ * 通用异常回复View
+ * Created by michael 2014/9/18.
  */
 public class ErrorView implements View {
 

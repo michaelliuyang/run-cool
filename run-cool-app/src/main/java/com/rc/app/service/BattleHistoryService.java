@@ -21,7 +21,14 @@ public class BattleHistoryService {
     @Autowired
     private BattleHistoryMapper battleHistoryMapper;
 
+    /**
+     * 获取某用户的最近5场的对战历史记录集合
+     *
+     * @param userId 用户ID
+     * @return 对战记录集合
+     */
     public List<BattleHistoryVO> getRecentBattleHistoryList(String userId) {
+        LogContext.instance().debug("Get recent battle history list");
         List<BattleHistoryVO> result = new ArrayList<BattleHistoryVO>();
         try {
             result = battleHistoryMapper.findRecentByUserId(userId);
@@ -31,7 +38,14 @@ public class BattleHistoryService {
         return result;
     }
 
+    /**
+     * 加入对战记录
+     *
+     * @param request 上传对战结果请求对象
+     * @throws Exception
+     */
     public void insert(UploadBattleResultRequest request) throws Exception {
+        LogContext.instance().debug("Insert battle history");
         try {
             BattleHistory battleHistory = new BattleHistory();
             battleHistory.setUserId(request.getUserId());

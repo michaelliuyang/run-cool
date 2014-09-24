@@ -23,12 +23,21 @@ public class UploadResultService {
     @Autowired
     private UserService userService;
 
+    /**
+     * 更新对战结果
+     *
+     * @param request 上传对战结果请求对象
+     * @param user    用户对象
+     * @throws Exception
+     */
     @Transactional
     public void uploadResult(UploadBattleResultRequest request, User user) throws Exception {
+        LogContext.instance().debug("Upload result");
         try {
             battleHistoryService.insert(request);
             int rewardScore = 0;
             if (BattleResult.WIN.equals(request.getResult())) {
+                LogContext.instance().debug("Result is win,get reward score");
                 Arena arena = arenaService.findById(request.getArenaId());
                 rewardScore = arena.getRewardScore();
             }

@@ -3,6 +3,10 @@ package com.rc.app.tools;
 import com.rc.app.constants.LoggerNameConstants;
 import org.apache.log4j.Logger;
 
+/**
+ * 日志帮助类
+ * Created by michael 2014/9/18.
+ */
 public class LogContext {
 
     private static final String SEPARATOR = " - ";

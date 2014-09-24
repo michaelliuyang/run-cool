@@ -6,6 +6,9 @@ package com.rc.app.constants;
  */
 public class Constants {
 
+    private Constants() {
+    }
+
     public static final int LIMIT_JOIN_ARENA = 3;
 
     public static final String RESPONSE_BOOLEAN_VALUE_NO = "0";

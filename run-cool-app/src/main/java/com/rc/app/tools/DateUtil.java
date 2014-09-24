@@ -1,59 +1,29 @@
 package com.rc.app.tools;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
+/**
+ * 日期帮助类
+ * Created by michael 2014/9/18.
+ */
 public class DateUtil {
 
+    public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
-
     public static final String YYYYMMDD = "yyyy-MM-dd";
-
-    public static final String DEFAULT_TIMEZONG_ID = "GMT+8";
-
-    public static final String DEFAULT_TIMEZONG_NAME = "Asia/Shanghai";
 
     /**
      * 格式化日期
      *
-     * @param date
-     * @param pattern
-     * @return
+     * @param date    日期对象
+     * @param pattern 格式化格式
+     * @return 格式化后的日期
      */
     public static String format(Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }
 
-    /**
-     * 按时区格式化日期
-     *
-     * @param timeMillis
-     * @param timeZone
-     * @param pattern
-     * @return
-     * @throws Exception
-     */
-    public static String getTimeByZone(long timeMillis, String timeZone, String pattern) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat();
-        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
-        sdf.applyPattern(pattern);
-        String result = sdf.format(new Date(timeMillis));
-        return result;
-    }
-
-    public static Date parse(String date, String pattern) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        return sdf.parse(date);
-    }
-
-    public static Date changeTimeZone(Date date, TimeZone oldZone, TimeZone newZone) {
-        Date dateTmp = null;
-        if (date != null) {
-            int timeOffset = oldZone.getRawOffset() - newZone.getRawOffset();
-            dateTmp = new Date(date.getTime() - timeOffset);
-        }
-        return dateTmp;
-    }
 }

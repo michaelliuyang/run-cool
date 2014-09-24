@@ -1,7 +1,7 @@
 package com.rc.app.vo;
 
 /**
- * 排行榜信息
+ * 排行榜信息VO
  * Created by michael on 14-9-20.
  */
 public class RankingVO {

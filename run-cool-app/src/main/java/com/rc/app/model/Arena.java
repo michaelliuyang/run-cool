@@ -9,11 +9,30 @@ import com.rc.app.constants.ArenaType;
  */
 public class Arena extends BaseModel {
 
+    /**
+     * 类型 分为金币和钻石币
+     */
     private ArenaType type = ArenaType.GOLDEN;
+    /**
+     * 等级 分为1、2、3
+     */
     private ArenaLevel level = ArenaLevel.ONE;
+
+    /**
+     * 消耗的金钱数量
+     */
     private Integer consumeMoney = 0;
+    /**
+     * 奖励的金钱数量
+     */
     private Integer rewardMoney = 0;
+    /**
+     * 奖励的积分
+     */
     private Integer rewardScore = 0;
+    /**
+     * 连胜的加成百分比
+     */
     private Double continueWinAddPercent;
 
     public ArenaType getType() {

@@ -1,7 +1,7 @@
 package com.rc.app.vo;
 
 /**
- * 道具
+ * 道具VO
  * Created by michael on 14-9-21.
  */
 public class PropVO {
