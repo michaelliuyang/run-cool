@@ -37,7 +37,6 @@
 <li>Prepare Environment</li>
 <li>Configuration</li>
 <li>Protocol Design</li>
-<li>Code Structure</li>
 </ul><h3>
 <a name="prepare-environment" class="anchor" href="#prepare-environment"><span class="octicon octicon-link"></span></a>Prepare Environment</h3>
 
@@ -92,12 +91,211 @@
 <h3>
 <a name="protocol-design" class="anchor" href="#protocol-design"><span class="octicon octicon-link"></span></a>Protocol Design</h3>
 
-<p>Editing...</p>
+<h4>
+<a name="request" class="anchor" href="#request"><span class="octicon octicon-link"></span></a>Request</h4>
 
-<h3>
-<a name="code-structure" class="anchor" href="#code-structure"><span class="octicon octicon-link"></span></a>Code Structure</h3>
+<h5>
+<a name="common-part-request" class="anchor" href="#common-part-request"><span class="octicon octicon-link"></span></a>Common Part Request</h5>
 
-<p>Editing...</p>
+<pre><code>{
+    "request": {
+        "protocol": "1.0", //Protocol version
+        "type": "", //Request type: 1:GetArea 2:GetBattleTarget 3:UploadResult 4:GetRanking
+        "imei":"013354000103155", //Device code
+        "userId": "", //User id
+        "mobilePhone": "13811312013", //Mobile phone number
+        "nickName": "michael", //Nick name
+        "role": {
+            "name": "magic", //Role name
+            "rank": "3" //Role rank
+        },
+        "mounts": {
+            "name": "bird", //Mounts name
+            "rank": "8"  //Mounts rank
+        },
+        "pet": {
+            "name": "peter" //Pet name
+        },
+        ......
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-arena-request" class="anchor" href="#get-arena-request"><span class="octicon octicon-link"></span></a>Get Arena Request</h5>
+
+<pre><code>{
+    "request": {
+        ...Common part...
+        "isGetBattleInfo": "0" //0:not send 1:send  Tell server is send user battle history list for recent 5
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-battle-target-request" class="anchor" href="#get-battle-target-request"><span class="octicon octicon-link"></span></a>Get Battle Target Request</h5>
+
+<pre><code>{
+    "request": {
+        ...Common part...
+    }
+}
+</code></pre>
+
+<h5>
+<a name="upload-battle-result-request" class="anchor" href="#upload-battle-result-request"><span class="octicon octicon-link"></span></a>Upload Battle Result Request</h5>
+
+<pre><code>{
+    "request": {
+        ...Common part...
+        "arenaId": "1", //Arena id
+        "battleScore": "320", //Battle score
+        "result": "W", //Battle result W or L
+        "isContinueWin": "0", //Is continue win 0:No 1:Yes
+        "targetUserId": "bc928dfd2aa911f65580b6a3e2f5192x" //Target user id
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-ranking-request" class="anchor" href="#get-ranking-request"><span class="octicon octicon-link"></span></a>Get Ranking Request</h5>
+
+<pre><code>{
+    "request": {
+        ...Common part...
+    }
+}
+</code></pre>
+
+<h4>
+<a name="response" class="anchor" href="#response"><span class="octicon octicon-link"></span></a>Response</h4>
+
+<h5>
+<a name="common-part-response" class="anchor" href="#common-part-response"><span class="octicon octicon-link"></span></a>Common Part Response</h5>
+
+<pre><code>{
+    "response": {
+        "protocol": "1.0", 
+        "type": "1",
+        "userId": "d2920c2eae982afd5eb40f29316e9b08",
+        "returnCode": "0" //Server return code  0:Success 1:illegal 2:server error
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-arena-response" class="anchor" href="#get-arena-response"><span class="octicon octicon-link"></span></a>Get Arena Response</h5>
+
+<pre><code>{
+    "response": {
+        ...common part...
+        "allow": "0", //Is allow join arena  0:NO 1:YES
+        "joinedCount": 0, //Joined battle count
+        "props": [  //Prop info, S:SPRINT,3 R:REVIVE,3
+            {
+                "name": "S", 
+                "limit": 3
+            }, 
+            {
+                "name": "R", 
+                "limit": 3
+            }
+        ], 
+        "arenas": [
+          {
+            "arenaId": 1, //Arena id
+            "type": "GOLDEN", //Arena type  GOLDEN OR DIAMOND
+            "level": "ONE", //Arena level   ONE OR TWO OR THREE
+            "consumeMoney": 10,  //Consume money
+            "rewardMoney": 50,  //Reward money
+            "rewardScore": 100, //Reward Score
+            "continueWinAddPercent": 0.1 //Continue win add percent
+          },
+          ......
+       ],
+       "battleHistorys": [ // If isGetBattleInfo equal 1
+        {
+        "targetUser": {
+          "userId": "bc928dfd2aa911f65580b6a3e2f5192q",
+          "mobilePhone": "13811312031",
+          "nickName": "a1",
+          "roleName": "warrior",
+          "roleRank": "3",
+          "petName": "hh",
+          "mountsName": "vv",
+          "mountsRank": "1",
+          "score": 56,
+          "maxBattleScore": 76
+        },
+        "arenaId": 1,
+        "result": "LOSE",
+        "score": 102
+      },
+      ......
+      ]
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-battle-target-response" class="anchor" href="#get-battle-target-response"><span class="octicon octicon-link"></span></a>Get Battle Target Response</h5>
+
+<pre><code>{
+    "response": {
+        ...Common part...
+        "battleTargetUser": {
+        "userId": "bc928dfd2aa911f65580b6a3e2f5192p",
+        "mobilePhone": "13811312055",
+        "nickName": "a3",
+        "roleName": "warrior",
+        "roleRank": "3",
+        "petName": "zz",
+        "mountsName": "hh",
+        "mountsRank": "3",
+        "score": 100,
+        "maxBattleScore": 98
+      }
+    }
+}
+</code></pre>
+
+<h5>
+<a name="upload-battle-result-response" class="anchor" href="#upload-battle-result-response"><span class="octicon octicon-link"></span></a>Upload Battle Result Response</h5>
+
+<pre><code>{
+    "response": {
+        ...Common part...
+    }
+}
+</code></pre>
+
+<h5>
+<a name="get-ranking-response" class="anchor" href="#get-ranking-response"><span class="octicon octicon-link"></span></a>Get Ranking Response</h5>
+
+<pre><code>{
+    "response": {
+        ...Common part...
+        "scoreRankingList": [ //User score ranking
+          {
+          "ranking": 1,
+          "userId": "bc928dfd2aa911f65580b6a3e2f5192l",
+          "nickName": "a5",
+          "score": 200
+          },
+        ......
+        ],
+        "battleScoreRankingList": [ //User battle Score ranking
+          {
+            "ranking": 1,
+            "userId": "bc928dfd2aa911f65580b6a3e2f5192l",
+            "nickName": "a5",
+            "score": 120
+         },
+         .....
+        ]
+    }
+}
+</code></pre>
       </section>
     </div>
 
