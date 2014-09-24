@@ -24,8 +24,8 @@ public interface UserMapper {
 
     User findRandom(String userId);
 
-    List<RankingVO> getScoreRanking();
+    List<RankingVO> getScoreRanking(String userId);
 
-    List<RankingVO> getBattleScoreRanking();
+    List<RankingVO> getBattleScoreRanking(String userId);
 
 }

@@ -1,13 +1,13 @@
 package com.rc.app.request;
 
 import com.rc.app.constants.RequestType;
-import com.rc.app.vo.MountsVO;
-import com.rc.app.vo.PetVO;
-import com.rc.app.vo.RoleVO;
 import com.rc.app.tools.DateUtil;
 import com.rc.app.tools.JsonUtil;
 import com.rc.app.tools.LogContext;
 import com.rc.app.tools.NumberUtil;
+import com.rc.app.vo.MountsVO;
+import com.rc.app.vo.PetVO;
+import com.rc.app.vo.RoleVO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -70,6 +70,8 @@ public abstract class BaseRequest {
                 logContext.setRequestTypeIndex(this.type.getIndex());
             logContext.info(this.type + " REQUEST START ...");
             logContext.info(JsonUtil.formatJsonStr(requestJsonObject.toString()));
+            request.setAttribute("requestProtocol", this.protocol);
+            request.setAttribute("requestUserId", this.userId);
         } catch (Exception e) {
             logContext.error(e, "转化请求报文失败");
             throw e;

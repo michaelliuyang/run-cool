@@ -1,6 +1,5 @@
 package com.rc.app.view;
 
-import com.rc.app.constants.ProtocolConstants;
 import com.rc.app.response.ErrorResponse;
 import org.springframework.web.servlet.View;
 
@@ -16,7 +15,11 @@ public class ErrorView implements View {
 
     @Override
     public void render(Map<String, ?> modelView, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ErrorResponse errorResponse = new ErrorResponse(ProtocolConstants.PROTOCOL_V1_0, null);
+        Object protocolObject = request.getAttribute("requestProtocol");
+        Object userIdObject = request.getAttribute("requestUserId");
+        String protocol = protocolObject == null ? "" : protocolObject.toString();
+        String userId = userIdObject == null ? "" : userIdObject.toString();
+        ErrorResponse errorResponse = new ErrorResponse(protocol, userId);
         byte[] data = errorResponse.convert2ByteResult();
         response.setContentLength(data.length);
         OutputStream out = response.getOutputStream();

@@ -1,7 +1,6 @@
 package com.rc.app.controller;
 
 import com.rc.app.constants.Constants;
-import com.rc.app.constants.ProtocolConstants;
 import com.rc.app.constants.RequestType;
 import com.rc.app.constants.ResponseReturnCode;
 import com.rc.app.model.Arena;
@@ -44,7 +43,7 @@ public class ArenaController extends BaseController {
         try {
             GetArenaRequest getArenaRequest = new GetArenaRequest();
             getArenaRequest.parse(request);
-            GetArenaResponse getArenaResponse = new GetArenaResponse(ProtocolConstants.PROTOCOL_V1_0,
+            GetArenaResponse getArenaResponse = new GetArenaResponse(getArenaRequest.getProtocol(),
                     getArenaRequest.getUserId());
             if (!isRightRequest(getArenaRequest, RequestType.GET_ARENA)) {
                 logContext.warn("Illegal request");

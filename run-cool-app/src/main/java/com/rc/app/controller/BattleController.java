@@ -1,6 +1,5 @@
 package com.rc.app.controller;
 
-import com.rc.app.constants.ProtocolConstants;
 import com.rc.app.constants.RequestType;
 import com.rc.app.constants.ResponseReturnCode;
 import com.rc.app.model.User;
@@ -44,8 +43,8 @@ public class BattleController extends BaseController {
         try {
             GetBattleTargetRequest getBattleTargetRequest = new GetBattleTargetRequest();
             getBattleTargetRequest.parse(request);
-            GetBattleTargetResponse getBattleTargetResponse = new GetBattleTargetResponse(ProtocolConstants.PROTOCOL_V1_0,
-                    getBattleTargetRequest.getUserId());
+            GetBattleTargetResponse getBattleTargetResponse =
+                    new GetBattleTargetResponse(getBattleTargetRequest.getProtocol(), getBattleTargetRequest.getUserId());
             if (!isRightRequest(getBattleTargetRequest, RequestType.GET_BATTLE_TARGET)) {
                 logContext.warn("Illegal request");
                 getBattleTargetResponse.setReturnCode(ResponseReturnCode.ILLEGAL_REQUEST.getIndex());
@@ -73,7 +72,7 @@ public class BattleController extends BaseController {
             UploadBattleResultRequest uploadBattleResultRequest = new UploadBattleResultRequest();
             uploadBattleResultRequest.parse(request);
             UploadBattleResultResponse uploadBattleResultResponse =
-                    new UploadBattleResultResponse(ProtocolConstants.PROTOCOL_V1_0,
+                    new UploadBattleResultResponse(uploadBattleResultRequest.getProtocol(),
                             uploadBattleResultRequest.getUserId());
             if (!isRightRequest(uploadBattleResultRequest, RequestType.UPLOAD_BATTLE_RESULT)) {
                 logContext.warn("Illegal request");
@@ -98,7 +97,7 @@ public class BattleController extends BaseController {
             GetRankingListRequest getRankingListRequest = new GetRankingListRequest();
             getRankingListRequest.parse(request);
             GetRankingListResponse getRankingListResponse =
-                    new GetRankingListResponse(ProtocolConstants.PROTOCOL_V1_0,
+                    new GetRankingListResponse(getRankingListRequest.getProtocol(),
                             getRankingListRequest.getUserId());
             if (!isRightRequest(getRankingListRequest, RequestType.GET_RANKING_LIST)) {
                 logContext.warn("Illegal request");
@@ -108,9 +107,9 @@ public class BattleController extends BaseController {
             }
             User user = dealCommonBiz(getRankingListRequest, getRankingListResponse);
             List<RankingVO> scoreRankingList = rankingService.
-                    getRankingList(user, RankingService.RANKING_SCORE_TYPE);
+                    getScoreRankingList(user.getUserId());
             List<RankingVO> battleScoreRankingList = rankingService.
-                    getRankingList(user, RankingService.RANKING_BATTLE_SCORE_TYPE);
+                    getBattleScoreRankingList(user.getUserId());
             getRankingListResponse.setScoreRankingList(scoreRankingList);
             getRankingListResponse.setBattleRankingList(battleScoreRankingList);
             return getRankingListResponse.convert2ByteResult();
