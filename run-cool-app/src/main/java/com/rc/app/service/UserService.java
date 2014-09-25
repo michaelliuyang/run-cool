@@ -141,6 +141,7 @@ public class UserService {
             LogContext.instance().debug("User is not exist and create new user");
             resultUser = insertUser(request);
         } else {
+            LogContext.instance().debug("User is exist");
             resultUser = userFromDB;
             if (!RequestType.UPLOAD_BATTLE_RESULT.equals(request.getType())) {
                 LogContext.instance().debug("Is not upload battle result request,update user basic info");
