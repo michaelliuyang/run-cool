@@ -20,11 +20,11 @@
       ]]>
     </select>
 
-    <select id="findByLevel" parameterType="java.lang.String" resultMap="arenaResult">
+    <select id="findAll" resultMap="arenaResult">
         <![CDATA[
             SELECT ID,ARENA_TYPE,ARENA_LEVEL,CONSUME_MONEY,REWARD_MONEY,
             REWARD_SCORE,CONTINUE_WIN_ADD_PERCENT
-            FROM TBL_ARENA WHERE ARENA_LEVEL = #{level}
+            FROM TBL_ARENA
         ]]>
     </select>
 

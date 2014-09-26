@@ -1,6 +1,5 @@
 package com.rc.app.model;
 
-import com.rc.app.constants.ArenaLevel;
 import com.rc.app.constants.Constants;
 import com.rc.app.tools.DateUtil;
 import com.rc.app.tools.LogContext;
@@ -131,23 +130,6 @@ public class User extends BaseModel {
             this.joinArenaCount = 1;
         else
             this.joinArenaCount += 1;
-    }
-
-    /**
-     * 获取下次对战竞技场的等级
-     *
-     * @return 竞技场等级
-     */
-    public ArenaLevel getJoinArenaLevel() {
-        if (this.joinArenaCount == 0) {
-            return ArenaLevel.ONE;
-        } else if (this.joinArenaCount == 1) {
-            return ArenaLevel.TWO;
-        } else if (this.joinArenaCount == 2) {
-            return ArenaLevel.THREE;
-        } else {
-            return ArenaLevel.NOT_JOIN;
-        }
     }
 
     public void updateScore(int rewardScore) {

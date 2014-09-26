@@ -1,6 +1,5 @@
 package com.rc.app.service;
 
-import com.rc.app.constants.ArenaLevel;
 import com.rc.app.constants.PropConfig;
 import com.rc.app.mapper.ArenaMapper;
 import com.rc.app.model.Arena;
@@ -23,18 +22,15 @@ public class ArenaService {
     private ArenaMapper arenaMapper;
 
     /**
-     * 根据等级获取竞技场集合
+     * 获取竞技场集合
      *
-     * @param level 等级
      * @return 竞技场集合
      */
-    public List<Arena> getArenaList(ArenaLevel level) {
+    public List<Arena> getArenaList() {
         List<Arena> arenas = new ArrayList<Arena>();
         try {
-            if (!ArenaLevel.NOT_JOIN.equals(level)) {
-                LogContext.instance().debug("Get arenas by level");
-                arenas = arenaMapper.findByLevel(level);
-            }
+            LogContext.instance().debug("Get arenas");
+            arenas = arenaMapper.findAll();
         } catch (Exception e) {
             LogContext.instance().error(e, "获取竞技场集合失败");
         }

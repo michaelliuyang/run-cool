@@ -30,6 +30,8 @@
         <result property="userId" column="USER_ID"/>
         <result property="nickName" column="NICK_NAME"/>
         <result property="score" column="MAX_BATTLE_SCORE"/>
+        <result property="role.name" column="ROLE_NAME"/>
+        <result property="role.rank" column="ROLE_RANK"/>
     </resultMap>
 
     <select id="findByUserId" parameterType="java.lang.String" resultMap="userResult">
@@ -64,18 +66,20 @@
 
     <select id="getScoreRanking" parameterType="java.lang.String" resultMap="rankBattleScoreResult">
         <![CDATA[
-          SELECT A.NUM AS NUM,A.USER_ID AS USER_ID,
-          A.NICK_NAME AS NICK_NAME,A.SCORE AS SCORE FROM
-          (SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,SCORE FROM TBL_USER,(SELECT @i:=0) AS IT
+          SELECT A.NUM AS NUM,A.USER_ID AS USER_ID,A.ROLE_NAME AS ROLE_NAME,
+          A.ROLE_RANK AS ROLE_RANK,A.NICK_NAME AS NICK_NAME,A.SCORE AS SCORE FROM
+          (SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,SCORE,ROLE_NAME,ROLE_RANK
+          FROM TBL_USER,(SELECT @i:=0) AS IT
 	      ORDER BY SCORE DESC) AS A WHERE A.NUM <= 100 OR A.USER_ID = #{userId}
         ]]>
     </select>
 
     <select id="getBattleScoreRanking" parameterType="java.lang.String" resultMap="rankBattleScoreResult">
         <![CDATA[
-          SELECT A.NUM AS NUM,A.USER_ID AS USER_ID,
-          A.NICK_NAME AS NICK_NAME,A.MAX_BATTLE_SCORE AS SCORE FROM
-          (SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,MAX_BATTLE_SCORE FROM TBL_USER,(SELECT @i:=0) AS IT
+          SELECT A.NUM AS NUM,A.USER_ID AS USER_ID,A.ROLE_NAME AS ROLE_NAME,
+          A.ROLE_RANK AS ROLE_RANK,A.NICK_NAME AS NICK_NAME,A.MAX_BATTLE_SCORE AS SCORE FROM
+          (SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,MAX_BATTLE_SCORE,ROLE_NAME,ROLE_RANK
+          FROM TBL_USER,(SELECT @i:=0) AS IT
 	      ORDER BY MAX_BATTLE_SCORE DESC) AS A WHERE A.NUM <= 100 OR A.USER_ID = #{userId}
         ]]>
     </select>

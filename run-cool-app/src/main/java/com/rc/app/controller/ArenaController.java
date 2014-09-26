@@ -52,7 +52,7 @@ public class ArenaController extends BaseController {
             }
             User user = dealCommonBiz(getArenaRequest, getArenaResponse);
             List<PropVO> propList = arenaService.getPropList();
-            List<Arena> arenaList = arenaService.getArenaList(user.getJoinArenaLevel());
+            List<Arena> arenaList = arenaService.getArenaList();
             getArenaResponse.setProps(propList);
             getArenaResponse.setArenas(convert2ArenaVOList(arenaList));
             getArenaResponse.setJoinedCount(user.getJoinArenaCount());

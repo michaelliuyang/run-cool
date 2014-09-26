@@ -9,6 +9,7 @@ public class RankingVO {
     private int ranking;
     private String userId;
     private String nickName;
+    private RoleVO role;
     private int score;
 
     public int getRanking() {
@@ -41,5 +42,13 @@ public class RankingVO {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public RoleVO getRole() {
+        return role;
+    }
+
+    public void setRoleVO(RoleVO role) {
+        this.role = role;
     }
 }
