@@ -57,6 +57,7 @@ public class UserService {
      * @throws Exception
      */
     public User checkUser(BaseRequest request) throws Exception {
+        LogContext.instance().debug("Check user");
         User resultUser = null;
         if (StringUtils.isBlank(request.getUserId())) {
             LogContext.instance().debug("User id is empty");
@@ -81,6 +82,7 @@ public class UserService {
      * @return 对战对手
      */
     public User getTargetUser(boolean isContinueWin, int maxBattleScore, String userId) {
+        LogContext.instance().debug("Get target user");
         double leftPercent = isContinueWin ? 0.1d : 0.15d;
         double rightPercent = isContinueWin ? 0.1d : 0.05d;
         double left = (1 - leftPercent) * maxBattleScore;
@@ -88,9 +90,10 @@ public class UserService {
         List<User> userList = findByScoreAndUserId(NumberUtil.formatNumber(left),
                 NumberUtil.formatNumber(right), userId);
         if (userList.isEmpty()) {
-            LogContext.instance().info("Get a random user from db");
+            LogContext.instance().debug("User list is empty,get a random user from db");
             return userMapper.findRandom(userId);
         }
+        LogContext.instance().debug("User list is not empty,get one from list");
         long random = NumberUtil.getRandomNum(0, userList.size() - 1);
         return userList.get((int) random);
     }
@@ -105,6 +108,7 @@ public class UserService {
      */
     public void updateUserScoreInfo(User user, int rewardScore,
                                     UploadBattleResultRequest request) throws Exception {
+        LogContext.instance().debug("Update user score info");
         try {
             user.updateScore(rewardScore);
             user.updateJoinArenaCount();
@@ -121,6 +125,7 @@ public class UserService {
     }
 
     private List<User> findByScoreAndUserId(int lowScore, int highScore, String userId) {
+        LogContext.instance().debug("Find user by score and user id");
         List<User> userList = new ArrayList<User>();
         try {
             Map<String, Object> params = new HashMap<String, Object>();
@@ -135,6 +140,7 @@ public class UserService {
     }
 
     private User findOrSaveUser(BaseRequest request, String userId) throws Exception {
+        LogContext.instance().debug("Find or save user");
         User resultUser = null;
         User userFromDB = findByUserId(userId);
         if (userFromDB == null) {
@@ -152,6 +158,7 @@ public class UserService {
     }
 
     private void updateUserBasicInfo(BaseRequest request, User user) throws Exception {
+        LogContext.instance().debug("Update user basic info");
         try {
             user.setMobilePhone(request.getMobilePhone());
             user.setNickName(request.getNickName());
@@ -168,6 +175,7 @@ public class UserService {
     }
 
     private User insertUser(BaseRequest request) throws Exception {
+        LogContext.instance().debug("Insert user");
         RoleVO role = request.getRole();
         PetVO pet = request.getPet();
         MountsVO mounts = request.getMounts();

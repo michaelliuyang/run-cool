@@ -53,6 +53,7 @@ public class BattleController extends BaseController {
             User user = dealCommonBiz(getBattleTargetRequest, getBattleTargetResponse);
             User targetUser = new User();
             if (user.isAllowJoinArena()) {
+                LogContext.instance().debug("Is allow join arena,get target user");
                 targetUser = userService.getTargetUser(user.getIsContinueWin(),
                         user.getMaxBattleScore(), user.getUserId());
             }

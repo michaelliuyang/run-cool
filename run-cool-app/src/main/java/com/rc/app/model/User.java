@@ -99,7 +99,9 @@ public class User extends BaseModel {
      * @return 是/否
      */
     public boolean isAllowJoinArena() {
-        return (this.joinArenaCount < Constants.LIMIT_JOIN_ARENA) && isAllowDate();
+        boolean result = (this.joinArenaCount < Constants.LIMIT_JOIN_ARENA) && isAllowDate();
+        LogContext.instance().debug("Is allow join arena:" + result);
+        return result;
     }
 
     /**
@@ -115,6 +117,7 @@ public class User extends BaseModel {
             Date begin = DateUtil.df.parse(nowDateStr + " 12:00:00");
             Date end = DateUtil.df.parse(nowDateStr + " 23:59:59");
             result = nowDate.after(begin) && nowDate.before(end);
+            LogContext.instance().debug("Is allow date:" + result);
         } catch (Exception e) {
             result = false;
             LogContext.instance().error(e, "Is allow date error");
