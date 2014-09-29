@@ -34,6 +34,11 @@
         <result property="role.rank" column="ROLE_RANK"/>
     </resultMap>
 
+    <resultMap id="uploadResultRankResult" type="com.rc.app.vo.UploadRankingVO">
+        <result property="userId" column="USER_ID"/>
+        <result property="ranking" column="NUM"/>
+    </resultMap>
+
     <select id="findByUserId" parameterType="java.lang.String" resultMap="userResult">
       <![CDATA[
           SELECT ID,USER_ID,MOBILE_PHONE,NICK_NAME,ROLE_NAME,
@@ -81,6 +86,15 @@
           (SELECT (@i:=@i+1) AS NUM,USER_ID,NICK_NAME,MAX_BATTLE_SCORE,ROLE_NAME,ROLE_RANK
           FROM TBL_USER,(SELECT @i:=0) AS IT
 	      ORDER BY MAX_BATTLE_SCORE DESC) AS A WHERE A.NUM <= 50 OR A.USER_ID = #{userId}
+        ]]>
+    </select>
+
+    <select id="getBattleScoreRankingByUserIds" parameterType="java.util.Map"
+            resultMap="uploadResultRankResult">
+        <![CDATA[
+          SELECT A.NUM AS NUM,A.USER_ID AS USER_ID FROM
+            (SELECT (@i:=@i+1) AS NUM,USER_ID FROM TBL_USER,(SELECT @i:=0) AS IT
+          ORDER BY MAX_BATTLE_SCORE DESC) AS A WHERE A.USER_ID IN (#{userId},#{targetUserId})
         ]]>
     </select>
 

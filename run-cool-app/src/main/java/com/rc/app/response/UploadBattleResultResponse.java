@@ -8,6 +8,9 @@ import com.rc.app.constants.RequestType;
  */
 public class UploadBattleResultResponse extends BaseResponse {
 
+    private int userRanking;
+    private int targetRanking;
+
     public UploadBattleResultResponse(String protocol, String userId) {
         super(protocol, userId);
     }
@@ -15,5 +18,21 @@ public class UploadBattleResultResponse extends BaseResponse {
     @Override
     protected RequestType requestType() {
         return RequestType.UPLOAD_BATTLE_RESULT;
+    }
+
+    public int getUserRanking() {
+        return userRanking;
+    }
+
+    public void setUserRanking(int userRanking) {
+        this.userRanking = userRanking;
+    }
+
+    public int getTargetRanking() {
+        return targetRanking;
+    }
+
+    public void setTargetRanking(int targetRanking) {
+        this.targetRanking = targetRanking;
     }
 }

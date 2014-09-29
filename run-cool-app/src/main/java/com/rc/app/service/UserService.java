@@ -10,6 +10,7 @@ import com.rc.app.tools.NumberUtil;
 import com.rc.app.vo.MountsVO;
 import com.rc.app.vo.PetVO;
 import com.rc.app.vo.RoleVO;
+import com.rc.app.vo.UploadRankingVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,6 +123,29 @@ public class UserService {
             LogContext.instance().error(e, "Update user score info error");
             throw e;
         }
+    }
+
+    /**
+     * 获取用户对应的对战得分排名
+     *
+     * @param userId       用户ID
+     * @param targetUserId 对战用户ID
+     * @return 名次集合
+     * @throws Exception
+     */
+    public List<UploadRankingVO> getBattleScoreRankingByUserIds(String userId, String targetUserId) throws Exception {
+        LogContext.instance().debug("Get battle score ranking");
+        List<UploadRankingVO> result = null;
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userId", userId);
+            params.put("targetUserId", targetUserId);
+            result = userMapper.getBattleScoreRankingByUserIds(params);
+        } catch (Exception e) {
+            LogContext.instance().error(e, "Get battle score ranking error");
+            throw e;
+        }
+        return result;
     }
 
     private List<User> findByScoreAndUserId(int lowScore, int highScore, String userId) {

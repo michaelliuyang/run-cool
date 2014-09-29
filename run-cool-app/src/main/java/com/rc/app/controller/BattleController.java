@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 对战的controller
@@ -83,6 +84,14 @@ public class BattleController extends BaseController {
             }
             User user = dealCommonBiz(uploadBattleResultRequest, uploadBattleResultResponse);
             uploadResultService.uploadResult(uploadBattleResultRequest, user);
+            Map<String, Integer> rankingMap = uploadResultService.getRankingMap(uploadBattleResultRequest.getUserId(),
+                    uploadBattleResultRequest.getTargetUserId());
+            if (!rankingMap.isEmpty()) {
+                uploadBattleResultResponse.setUserRanking(
+                        rankingMap.get(uploadBattleResultRequest.getUserId()));
+                uploadBattleResultResponse.setTargetRanking(
+                        rankingMap.get(uploadBattleResultRequest.getTargetUserId()));
+            }
             return uploadBattleResultResponse.convert2ByteResult();
         } catch (Exception e) {
             logContext.error(e, "Upload battle result request error");

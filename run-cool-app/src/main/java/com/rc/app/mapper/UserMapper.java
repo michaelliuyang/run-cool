@@ -2,6 +2,7 @@ package com.rc.app.mapper;
 
 import com.rc.app.model.User;
 import com.rc.app.vo.RankingVO;
+import com.rc.app.vo.UploadRankingVO;
 
 import java.util.List;
 import java.util.Map;
@@ -27,5 +28,7 @@ public interface UserMapper {
     List<RankingVO> getScoreRanking(String userId);
 
     List<RankingVO> getBattleScoreRanking(String userId);
+
+    List<UploadRankingVO> getBattleScoreRankingByUserIds(Map<String, Object> params);
 
 }
